@@ -22,3 +22,6 @@ Niektóre z dostępnych funkcji:
 - *historia pacjentów*.
 
 Dzięki temu systemowi personel medyczny może śledzić pacjentów i zapewnić im odpowiednią opiekę medyczną.
+
+## Diagram ERD
+<img src="Diagram ERD.png" />
