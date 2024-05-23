@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  File created - œroda-maja-22-2024   
+--  File created - czwartek-maja-23-2024   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Table DOCTORS
@@ -129,14 +129,14 @@
   TABLESPACE "USERS" ;
 REM INSERTING into MEDICAL_SYSTEM.DOCTORS
 SET DEFINE OFF;
-Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('1','Dawid','Wójcik','Onkologia dzieciêca','575992620');
-Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('2','Robert','Œwider','Dermatologia','920378612');
-Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('3','Jaros³aw','Kuczyñski','Alergologia','610975653');
-Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('4','£ukasz','Zuchniak','Psychologia','913816554');
+Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('1','Dawid','WÃ³jcik','Onkologia dzieciÄ™ca','575992620');
+Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('2','Robert','Åšwider','Dermatologia','920378612');
+Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('3','JarosÅ‚aw','KuczyÅ„ski','Alergologia','610975653');
+Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('4','Åukasz','Zuchniak','Psychologia','913816554');
 Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('5','Krystian','Dybiec','Urologia','224917951');
-Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('6','Pawe³','Zieliñski','Ginekologia','321987654');
-Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('7','Maria','D¹browska','Fizjoterapia','789123456');
-Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('8','Piotr','Wiœniewski','Dermatologia','456123789');
+Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('6','PaweÅ‚','ZieliÅ„ski','Ginekologia','321987654');
+Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('7','Maria','DÄ…browska','Fizjoterapia','789123456');
+Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('8','Piotr','WiÅ›niewski','Dermatologia','456123789');
 Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('9','Anna','Nowak','Neurologia','987654321');
 Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('10','Jan','Kowalski','Kardiologia','123456789');
 REM INSERTING into MEDICAL_SYSTEM.DOCUMENTATIONS
@@ -175,15 +175,15 @@ Insert into MEDICAL_SYSTEM.MEDICINES (ID,NAME,PRICE) values ('29','Cefalosporyna
 Insert into MEDICAL_SYSTEM.MEDICINES (ID,NAME,PRICE) values ('30','Amantadyna','17');
 REM INSERTING into MEDICAL_SYSTEM.PATIENTS
 SET DEFINE OFF;
-Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('1','Józef','Kijowski','Mê¿czyzna','ul. Kwiatowa 1, Warszawa','123456789');
-Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('2','Anna','Nowakowska','Kobieta','ul. Leœna 5, Kraków','987654321');
-Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('3','Pawe³','Wiœniewski','Mê¿czyzna','ul. S³oneczna 10, Wroc³aw','456123789');
-Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('4','Agnieszka','D¹browska','Kobieta','ul. Polna 7, Gdañsk','789456123');
-Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('5','Katarzyna','Lewandowska','Kobieta','ul. Zielona 3, Poznañ','654987321');
-Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('6','Andrzej','Wójcik','Mê¿czyzna','ul. Górska 12, £ódŸ','321654987');
+Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('1','JÃ³zef','Kijowski','MÄ™Å¼czyzna','ul. Kwiatowa 1, Warszawa','123456789');
+Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('2','Anna','Nowakowska','Kobieta','ul. LeÅ›na 5, KrakÃ³w','987654321');
+Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('3','PaweÅ‚','WiÅ›niewski','MÄ™Å¼czyzna','ul. SÅ‚oneczna 10, WrocÅ‚aw','456123789');
+Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('4','Agnieszka','DÄ…browska','Kobieta','ul. Polna 7, GdaÅ„sk','789456123');
+Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('5','Katarzyna','Lewandowska','Kobieta','ul. Zielona 3, PoznaÅ„','654987321');
+Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('6','Andrzej','WÃ³jcik','MÄ™Å¼czyzna','ul. GÃ³rska 12, RzeszÃ³w','321654987');
 Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('7','Maria','Kowalczyk','Kobieta','ul. Morska 8, Szczecin','987321654');
-Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('8','Tomasz','Kamiñski','Mê¿czyzna','ul. Parkowa 15, Lublin','741852963');
-Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('9','Barbara','Zieliñska','Kobieta','ul. Ogrodowa 4, Katowice','369258147');
+Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('8','Tomasz','KamiÅ„ski','MÄ™Å¼czyzna','ul. Parkowa 15, Lublin','741852963');
+Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('9','Barbara','ZieliÅ„ska','Kobieta','ul. Ogrodowa 4, Katowice','369258147');
 REM INSERTING into MEDICAL_SYSTEM.PRESCRIPTION_MEDICINES
 SET DEFINE OFF;
 REM INSERTING into MEDICAL_SYSTEM.PRESCRIPTIONS
@@ -214,6 +214,7 @@ EXCEPTION
         RAISE;
 END;
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure ADD_MEDICINE
@@ -234,6 +235,7 @@ EXCEPTION
         ROLLBACK;
         RAISE;
 END;
+
 
 /
 --------------------------------------------------------
@@ -259,6 +261,7 @@ EXCEPTION
         RAISE;
 END;
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure ADD_PRESCRIPTION
@@ -279,6 +282,7 @@ EXCEPTION
         ROLLBACK;
         RAISE;
 END;
+
 
 /
 --------------------------------------------------------
@@ -302,6 +306,7 @@ EXCEPTION
         ROLLBACK;
         RAISE;
 END;
+
 
 /
 --------------------------------------------------------
@@ -327,6 +332,7 @@ EXCEPTION
         RAISE;
 END;
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure ADD_VISIT
@@ -351,6 +357,7 @@ EXCEPTION
         RAISE;
 END;
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure DELETE_DOCUMENTATION
@@ -364,6 +371,7 @@ AS
 BEGIN
     DELETE FROM DOCUMENTATIONS WHERE ID = P_ID;
 END DELETE_DOCUMENTATION;
+
 
 /
 --------------------------------------------------------
@@ -379,6 +387,7 @@ BEGIN
     DELETE FROM PATIENTS WHERE ID = P_ID;
 END DELETE_PATIENT;
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure DELETE_PRESCRIPTION
@@ -392,6 +401,7 @@ AS
 BEGIN
     DELETE FROM PRESCRIPTIONS WHERE ID = P_ID;
 END DELETE_PRESCRIPTION;
+
 
 /
 --------------------------------------------------------
@@ -407,6 +417,7 @@ BEGIN
     DELETE FROM PRESCRIPTION_MEDICINES WHERE ID = P_ID;
 END DELETE_PRESCRIPTION_MEDICINE;
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure DELETE_ROOM
@@ -421,21 +432,6 @@ BEGIN
     DELETE FROM ROOMS WHERE ID = P_ID;
 END DELETE_ROOM;
 
-/
---------------------------------------------------------
---  DDL for Procedure SEARCH_EXPENSIVE_MEDICINES
---------------------------------------------------------
-set define off;
-
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "MEDICAL_SYSTEM"."SEARCH_EXPENSIVE_MEDICINES" SEARCH_EXPENSIVE_MEDICINES
-AS
-    AVG_PRICE NUMBER;
-BEGIN
-    SELECT AVG(PRICE) INTO AVG_PRICE FROM MEDICINES;
-    FOR MED IN (SELECT * FROM MEDICINES WHERE PRICE > AVG_PRICE) LOOP
-        DBMS_OUTPUT.PUT_LINE('Medicine ID: ' || MED.ID || ', Name: ' || MED.NAME || ', Price: ' || MED.PRICE);
-    END LOOP;
-END ;
 
 /
 --------------------------------------------------------
@@ -456,6 +452,7 @@ BEGIN
     SET VISIT_ID = P_VISIT_ID, DOCUMENTATION_DATE = P_DATE, DIAGNOSIS = P_DIAGNOSIS, TREATMENT_METHOD = P_TREATMENT_METHOD
     WHERE ID = P_ID;
 END UPDATE_DOCUMENTATION;
+
 
 /
 --------------------------------------------------------
@@ -478,6 +475,7 @@ BEGIN
     WHERE ID = P_ID;
 END UPDATE_PATIENT;
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure UPDATE_PRESCRIPTION
@@ -496,6 +494,7 @@ BEGIN
     WHERE ID = P_ID;
 END UPDATE_PRESCRIPTION;
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure UPDATE_PRESCRIPTION_MEDICINE
@@ -513,6 +512,7 @@ BEGIN
     SET DOSAGE = P_DOSAGE, PAYMENT = P_PAYMENT
     WHERE ID = P_ID;
 END UPDATE_PRESCRIPTION_MEDICINE;
+
 
 /
 --------------------------------------------------------
@@ -535,6 +535,7 @@ BEGIN
     WHERE ID = P_ID;
 END UPDATE_ROOM;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function CALCULATE_AVERAGE_MEDICINE_PRICE
@@ -549,6 +550,7 @@ BEGIN
         SELECT AVG(PRICE) AS AVERAGE_PRICE FROM MEDICINES;
     RETURN average_price_cursor;
 END CALCULATE_AVERAGE_MEDICINE_PRICE;
+
 
 /
 --------------------------------------------------------
@@ -567,6 +569,7 @@ BEGIN
         GROUP BY D.ID, D.NAME, D.LAST_NAME, D.SPECIALIZATION, D.PHONE_NUMBER;
     RETURN doctor_patient_count_cursor;
 END GENERATE_DOCTOR_PATIENT_COUNT_REPORT;
+
 
 /
 --------------------------------------------------------
@@ -589,6 +592,7 @@ BEGIN
     RETURN top_diagnosis_cursor;
 END GENERATE_TOP_DIAGNOSIS_REPORT;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GENERATE_VISIT_COUNT_BY_SPECIALIZATION_REPORT
@@ -607,6 +611,7 @@ BEGIN
     RETURN visit_count_by_specialization_cursor;
 END GENERATE_VISIT_COUNT_BY_SPECIALIZATION_REPORT;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_ALL_DOCTORS
@@ -621,6 +626,7 @@ BEGIN
         SELECT * FROM doctors;
     RETURN doctors_cursor;
 END GET_ALL_DOCTORS;
+
 
 /
 --------------------------------------------------------
@@ -637,6 +643,7 @@ BEGIN
     RETURN documentation_cursor;
 END GET_ALL_DOCUMENTATIONS;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_ALL_PATIENTS
@@ -651,6 +658,7 @@ BEGIN
         SELECT * FROM PATIENTS;
     RETURN patients_cursor;
 END GET_ALL_PATIENTS;
+
 
 /
 --------------------------------------------------------
@@ -667,6 +675,7 @@ BEGIN
     RETURN prescriptions_cursor;
 END GET_ALL_PRESCRIPTIONS;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_ALL_ROOMS
@@ -682,6 +691,7 @@ BEGIN
     RETURN rooms_cursor;
 END GET_ALL_ROOMS;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_ALL_VISITS
@@ -696,6 +706,7 @@ BEGIN
         SELECT * FROM VISITS;
     RETURN visits_cursor;
 END GET_ALL_VISITS;
+
 
 /
 --------------------------------------------------------
@@ -717,6 +728,7 @@ BEGIN
     RETURN prescription_medicines_cursor;
 END GET_PRESCRIPTION_MEDICINES;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function SEARCH_DOCTORS_BY_SPECIALIZATION
@@ -733,6 +745,21 @@ BEGIN
         SELECT * FROM DOCTORS WHERE SPECIALIZATION = P_SPECIALIZATION;
     RETURN doctors_by_specialization_cursor;
 END SEARCH_DOCTORS_BY_SPECIALIZATION;
+
+
+/
+--------------------------------------------------------
+--  DDL for Function SEARCH_EXPENSIVE_MEDICINES
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE FUNCTION "MEDICAL_SYSTEM"."SEARCH_EXPENSIVE_MEDICINES" RETURN SYS_REFCURSOR
+IS
+    AVG_PRICE NUMBER;
+    CUR_MEDICINES SYS_REFCURSOR;
+BEGIN
+    OPEN CUR_MEDICINES FOR SELECT * FROM MEDICINES WHERE PRICE > (SELECT AVG(PRICE) FROM MEDICINES);
+    RETURN CUR_MEDICINES;
+END SEARCH_EXPENSIVE_MEDICINES;
 
 /
 --------------------------------------------------------
@@ -753,6 +780,7 @@ BEGIN
         WHERE TRUNC(V.START_DATE) = TRUNC(P_VISIT_DATE);
     RETURN patients_by_visit_date_cursor;
 END SEARCH_PATIENTS_BY_VISIT_DATE;
+
 
 /
 --------------------------------------------------------
@@ -783,6 +811,7 @@ BEGIN
     RETURN top_prescribed_medicines_cursor;
 END SEARCH_TOP_PRESCRIBED_MEDICINES_BY_DOCTOR;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function SEARCH_VISITS_BY_PATIENT_LAST_NAME
@@ -804,25 +833,15 @@ BEGIN
     RETURN visits_by_patient_last_name_cursor;
 END SEARCH_VISITS_BY_PATIENT_LAST_NAME;
 
-/
---------------------------------------------------------
---  Constraints for Table DOCTORS
---------------------------------------------------------
 
-  ALTER TABLE "MEDICAL_SYSTEM"."DOCTORS" MODIFY ("ID" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."DOCTORS" ADD PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
-  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
-  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
-  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
-  TABLESPACE "USERS"  ENABLE;
+/
 --------------------------------------------------------
 --  Constraints for Table PATIENTS
 --------------------------------------------------------
 
   ALTER TABLE "MEDICAL_SYSTEM"."PATIENTS" MODIFY ("ID" NOT NULL ENABLE);
   ALTER TABLE "MEDICAL_SYSTEM"."PATIENTS" ADD PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
   BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
@@ -833,7 +852,18 @@ END SEARCH_VISITS_BY_PATIENT_LAST_NAME;
 
   ALTER TABLE "MEDICAL_SYSTEM"."PRESCRIPTION_MEDICINES" MODIFY ("ID" NOT NULL ENABLE);
   ALTER TABLE "MEDICAL_SYSTEM"."PRESCRIPTION_MEDICINES" ADD PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table DOCTORS
+--------------------------------------------------------
+
+  ALTER TABLE "MEDICAL_SYSTEM"."DOCTORS" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."DOCTORS" ADD PRIMARY KEY ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "USERS"  ENABLE;
 --------------------------------------------------------
 --  Constraints for Table ROOMS
@@ -841,7 +871,7 @@ END SEARCH_VISITS_BY_PATIENT_LAST_NAME;
 
   ALTER TABLE "MEDICAL_SYSTEM"."ROOMS" MODIFY ("ID" NOT NULL ENABLE);
   ALTER TABLE "MEDICAL_SYSTEM"."ROOMS" ADD PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
   BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
@@ -852,7 +882,7 @@ END SEARCH_VISITS_BY_PATIENT_LAST_NAME;
 
   ALTER TABLE "MEDICAL_SYSTEM"."DOCUMENTATIONS" MODIFY ("ID" NOT NULL ENABLE);
   ALTER TABLE "MEDICAL_SYSTEM"."DOCUMENTATIONS" ADD PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   TABLESPACE "USERS"  ENABLE;
 --------------------------------------------------------
 --  Constraints for Table VISITS
@@ -860,7 +890,7 @@ END SEARCH_VISITS_BY_PATIENT_LAST_NAME;
 
   ALTER TABLE "MEDICAL_SYSTEM"."VISITS" MODIFY ("ID" NOT NULL ENABLE);
   ALTER TABLE "MEDICAL_SYSTEM"."VISITS" ADD PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   TABLESPACE "USERS"  ENABLE;
 --------------------------------------------------------
 --  Constraints for Table PRESCRIPTIONS
@@ -868,7 +898,7 @@ END SEARCH_VISITS_BY_PATIENT_LAST_NAME;
 
   ALTER TABLE "MEDICAL_SYSTEM"."PRESCRIPTIONS" MODIFY ("ID" NOT NULL ENABLE);
   ALTER TABLE "MEDICAL_SYSTEM"."PRESCRIPTIONS" ADD PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
   BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
@@ -879,7 +909,7 @@ END SEARCH_VISITS_BY_PATIENT_LAST_NAME;
 
   ALTER TABLE "MEDICAL_SYSTEM"."MEDICINES" MODIFY ("ID" NOT NULL ENABLE);
   ALTER TABLE "MEDICAL_SYSTEM"."MEDICINES" ADD PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
   BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
