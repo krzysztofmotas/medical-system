@@ -11,6 +11,16 @@ use App\Models\User;
 
 class LoginController extends Controller
 {
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return to_route('dashboard.index');
+    }
+
     public function authenticate(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -24,7 +34,7 @@ class LoginController extends Controller
 
         $name = $request->input('name');
         $last_name = $request->input('last_name');
-        $is_doctor = $request->input('is_doctor');
+        $is_doctor = (boolean) $request->input('is_doctor');
 
         $isLoggedIn = false;
 
@@ -40,12 +50,16 @@ class LoginController extends Controller
             $user->last_name = $last_name;
             $user->is_doctor = $is_doctor;
             $user->table_id = $this->getUserTableId($user);
+            $user->save();
 
             Auth::login($user);
 
-            // return to_route('dashboard.index');
+            return to_route('dashboard.index');
         } else {
-            return redirect()->back()->with('error', 'Nieprawidłowe dane logowania.');
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Nieprawidłowe dane logowania.');
         }
     }
 

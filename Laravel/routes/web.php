@@ -3,18 +3,22 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DoctorController;
 
-Route::get('/', function() {
-    if (Auth::check()) {
-        // return to_route('dashboard.index');
-    } else {
-        return view('auth.login');
-    }
-});
+Route::controller(DashboardController::class)
+    ->group(function () {
+        Route::get('/', 'index')->name('dashboard.index');
+    });
+
+Route::controller(DoctorController::class)
+    ->group(function () {
+        Route::get('/expensive-medicines', 'expensiveMedicines')->name('doctor.expensive.medicines');
+    });
 
 Route::controller(LoginController::class)
-    ->middleware('guest')
     ->group(function () {
-        Route::post('/login', 'authenticate')->name('login');
+        Route::post('/login', 'authenticate')->middleware('guest')->name('login');
+        Route::get('/logout', 'logout')->middleware('auth')->name('logout');
     });
 
