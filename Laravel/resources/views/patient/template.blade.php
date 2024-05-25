@@ -13,4 +13,20 @@
             <div>Strona główna</div>
         </a>
     </li>
+
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Personel</span>
+    </li>
+
+    <li class="menu-item {{ Route::current()->getName() === 'doctor.all-doctors' ? 'active' : '' }}">
+        <a href="{{ route('doctor.all-doctors') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-plus-medical"></i>
+            <div>Lekarze</div>
+        </a>
+    </li>
+
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Inne</span>
+    </li>
+
 @endsection
