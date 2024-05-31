@@ -41,8 +41,8 @@
         </a>
     </li>
 
-    <li class="menu-item {{ Route::current()->getName() === 'data.top-doctors' ? 'active' : '' }}">
-        <a href="" class="menu-link">
+    <li class="menu-item {{ Route::current()->getName() === 'doctor.patient.count.report' ? 'active' : '' }}">
+        <a href="{{ route('doctor.patient.count.report') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-user-check"></i>
             <div>Lekarze z największą liczbą wizyt</div>
         </a>
@@ -94,6 +94,13 @@
         <a href="" class="menu-link">
             <i class="menu-icon tf-icons bx bx-pie-chart-alt"></i>
             <div>Rozkład płci wg wieku</div>
+        </a>
+    </li>
+
+    <li class="menu-item {{ Route::current()->getName() === 'doctor.visits.search' ? 'active' : '' }}">
+        <a href="{{ route('doctor.visits.search') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-calendar-check"></i>
+            <div>Wizyty</div>
         </a>
     </li>
 

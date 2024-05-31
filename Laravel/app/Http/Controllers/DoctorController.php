@@ -24,26 +24,62 @@ class DoctorController extends Controller
         return view('doctor.components.all-doctors', compact('doctors'));
     }
 
+    public function searchDoctorsBySpecialization(Request $request)
+    {
+        $specialization = $request->input('specialization');
+        $doctors = $this->executeProcedureWithCursor('SEARCH_DOCTORS_BY_SPECIALIZATION', [$specialization]);
+        return view('doctor.components.search-doctors', compact('doctors', 'specialization'));
+    }
+
+    public function doctorPatientCountReport()
+    {
+        $report = $this->executeProcedureWithCursor('GENERATE_DOCTOR_PATIENT_COUNT_REPORT');
+        return view('doctor.components.doctor-patient-count-report', compact('report'));
+    }
+
     public function allPatients()
     {
         $patients = $this->executeProcedureWithCursor('GET_ALL_PATIENTS');
         return view('doctor.components.all-patients', compact('patients'));
     }
 
-    private function executeProcedureWithCursor($procedureName)
+    public function allVisits()
+    {
+        $visits = $this->executeProcedureWithCursor('GET_ALL_VISITS');
+        return view('doctor.components.all-visits', compact('visits'));
+    }
+    public function searchVisitsByPatientLastName(Request $request)
+    {
+        $lastName = $request->input('last_name');
+        $visits = $this->executeProcedureWithCursor('SEARCH_VISITS_BY_PATIENT_LAST_NAME', [$lastName]);
+        return view('doctor.components.search-visits', compact('visits', 'lastName'));
+    }
+
+    private function executeProcedureWithCursor($procedureName, $params = [])
     {
         $conn = DB::getPdo()->getResource();
+        $sql = "BEGIN :result := $procedureName(";
+        $placeholders = [];
 
-        $sql = "BEGIN :result := $procedureName; END;";
+        // Build the placeholders for the parameters
+        foreach ($params as $index => $param) {
+            $placeholders[] = ":param$index";
+        }
+
+        $sql .= implode(', ', $placeholders) . "); END;";
         $stmt = oci_parse($conn, $sql);
-
         $cursor = oci_new_cursor($conn);
 
+        // Bind the cursor
         oci_bind_by_name($stmt, ':result', $cursor, -1, OCI_B_CURSOR);
+
+        // Bind the parameters
+        foreach ($params as $index => $param) {
+            oci_bind_by_name($stmt, ":param$index", $params[$index]);
+        }
 
         oci_execute($stmt);
         oci_execute($cursor, OCI_DEFAULT);
-
         oci_fetch_all($cursor, $results, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
         oci_free_statement($stmt);
