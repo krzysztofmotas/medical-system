@@ -1,5 +1,7 @@
 @extends('doctor.template')
 
+@section('title', 'Drogie leki')
+
 @section('component-content')
     <div class="card">
         <h5 class="card-header">Lista leków, których cena jest wyższa od średniej ceny leku</h5>

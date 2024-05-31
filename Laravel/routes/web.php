@@ -17,6 +17,8 @@ Route::controller(DoctorController::class)
         Route::get('/expensive-medicines', 'expensiveMedicines')->name('doctor.expensive.medicines');
         Route::get('/all-doctors', 'allDoctors')->name('doctor.all-doctors');
         Route::get('/all-patients', 'allPatients')->name('doctor.all-patients');
+        Route::get('/visits/create', 'createVisit')->name('doctor.create.visit');
+        Route::post('/visits/store', 'storeVisit')->name('doctor.store.visit');
     });
 
 Route::controller(PatientController::class)

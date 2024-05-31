@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <div class="app-brand justify-content-center">
                             <a href="#" class="app-brand-link gap-2">
-                                <span class="app-brand-text demo text-body fw-bolder">Medical System</span>
+                                <span class="app-brand-text demo text-body fw-bolder">medical system</span>
                             </a>
                         </div>
 
@@ -45,7 +45,7 @@
                             </div>
                             <div class="mb-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="is_doctor" />
+                                    <input class="form-check-input" type="checkbox" name="is_doctor" id="is_doctor">
                                     <label class="form-check-label" for="is_doctor">Jestem lekarzem</label>
                                 </div>
                             </div>

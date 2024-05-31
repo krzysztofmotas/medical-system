@@ -45,7 +45,10 @@
 </head>
 
 <body>
+    @include('shared.success-toast')
+
     @yield('body')
+    @stack('scripts')
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->

@@ -1,11 +1,17 @@
 @extends('doctor.template')
 
+@section('title', 'Lista pacjentów')
+
 @section('component-content')
-    <div class="container mt-5 mb-5">
-        <h1 class="text-center">Lista Pacjentów</h1>
-        <div class="row justify-content-center">
-            @if (!empty($patients))
-                <table class="table table-striped">
+    <div class="card">
+        <h5 class="card-header">Lista pacjentów</h5>
+        @if (empty($patients))
+            <div class="alert alert-danger mx-4" role="alert">
+                Brak pacjentów do wyświetlenia.
+            </div>
+        @else
+            <div class="table-responsive text-nowrap">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -15,7 +21,7 @@
                             <th>Numer telefonu</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="table-border-bottom-0">
                         @foreach ($patients as $patient)
                             <tr>
                                 <td>{{ $patient['ID'] }}</td>
@@ -27,9 +33,7 @@
                         @endforeach
                     </tbody>
                 </table>
-            @else
-                <p class="text-center">Brak pacjentów do wyświetlenia.</p>
-            @endif
-        </div>
+            </div>
+        @endif
     </div>
 @endsection

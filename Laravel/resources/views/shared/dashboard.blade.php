@@ -7,7 +7,7 @@
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
                 <div class="app-brand demo">
                     <a href="#" class="app-brand-link">
-                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Medical System</span>
+                        <span class="app-brand-text demo menu-text fw-bolder">medical system</span>
                     </a>
 
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -27,6 +27,11 @@
             <div class="layout-page">
                 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
                     id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                          <i class="bx bx-menu bx-sm"></i>
+                        </a>
+                    </div>
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                         <!-- User -->
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -34,7 +39,7 @@
                                 <a class="nav-link dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <span class="fw-semibold">
                                         @if (Auth::user()->is_doctor)
-                                            <span class="badge bg-success">Doktor</span>
+                                            <span class="badge bg-success">Lekarz</span>
                                         @else
                                             <span class="badge bg-primary">Pacjent</span>
                                         @endif

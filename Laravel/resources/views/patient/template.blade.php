@@ -1,7 +1,5 @@
 @extends('shared.dashboard')
 
-@section('title', 'Strona główna')
-
 @section('content')
     @yield('component-content')
 @endsection

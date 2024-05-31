@@ -18,6 +18,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
+        User::truncate();
         return to_route('dashboard.index');
     }
 
@@ -45,6 +46,8 @@ class LoginController extends Controller
         }
 
         if ($isLoggedIn) {
+            User::truncate();
+
             $user = new User();
             $user->name = $name;
             $user->last_name = $last_name;
@@ -54,7 +57,8 @@ class LoginController extends Controller
 
             Auth::login($user);
 
-            return to_route('dashboard.index');
+            return to_route('dashboard.index')
+                ->with('success', 'Zostałeś pomyślnie zalogowany na swoje konto!');
         } else {
             return redirect()
                 ->back()

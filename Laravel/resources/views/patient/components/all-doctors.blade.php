@@ -1,5 +1,7 @@
 @extends('patient.template')
 
+@section('title', 'Lista lekarzy')
+
 @section('component-content')
     <div class="container mt-5 mb-5">
         <h1 class="text-center">Lista Doktorów</h1>
