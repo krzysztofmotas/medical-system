@@ -7,7 +7,10 @@
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
                 <div class="app-brand demo">
                     <a href="{{ route('dashboard.index') }}" class="app-brand-link">
-                        <span class="app-brand-text demo menu-text fw-bolder">medical system</span>
+                        <span class="app-brand-text demo menu-text fw-bolder">
+                            <i class="bx bx-plus-medical me-1 text-primary"></i>
+                            medical system
+                        </span>
                     </a>
 
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -29,7 +32,7 @@
                     id="layout-navbar">
                     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
                         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                          <i class="bx bx-menu bx-sm"></i>
+                            <i class="bx bx-menu bx-sm"></i>
                         </a>
                     </div>
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
@@ -48,7 +51,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('logout' )}}">
+                                        <a class="dropdown-item" href="{{ route('logout') }}">
                                             <i class="bx bx-power-off me-2"></i>
                                             <span class="align-middle">Wyloguj się</span>
                                         </a>

@@ -12,7 +12,10 @@
                     <div class="card-body">
                         <div class="app-brand justify-content-center">
                             <a href="#" class="app-brand-link gap-2">
-                                <span class="app-brand-text demo text-body fw-bolder">medical system</span>
+                                <span class="app-brand-text demo text-body fw-bolder">
+                                    <i class="bx bx-plus-medical me-1 text-primary"></i>
+                                    medical system
+                                </span>
                             </a>
                         </div>
 

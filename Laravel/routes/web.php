@@ -20,6 +20,7 @@ Route::controller(DoctorController::class)
         Route::get('/visits/create', 'createVisit')->name('doctor.create.visit');
         Route::get('/visits/manage', 'manageVisits')->name('doctor.manage.visits');
         Route::get('/visits/edit/{id}', 'editVisit')->name('doctor.edit.visit');
+        Route::put('/visits/update/{id}', 'updateVisit')->name('doctor.update.visit');
         Route::delete('/visits/delete/{id}', 'deleteVisit')->name('doctor.delete.visit');
         Route::post('/visits/store', 'storeVisit')->name('doctor.store.visit');
         Route::get('/specialization-popularity', 'specializationPopularity')->name('doctor.specialization.popularity');

@@ -235,4 +235,143 @@ class DoctorController extends Controller
             ->back()
             ->with('success', 'Wizyta została pomyślnie usunięta wraz z powiązanymi danymi.');
     }
+
+    public function editVisit($visitId)
+    {
+        $visit = DB::table('VISITS')
+            ->join('PATIENTS', 'VISITS.PATIENT_ID', '=', 'PATIENTS.ID')
+            ->leftJoin('DOCUMENTATIONS', 'VISITS.ID', '=', 'DOCUMENTATIONS.VISIT_ID')
+            ->where('VISITS.ID', $visitId)
+            ->select(
+                'VISITS.ID',
+                'VISITS.PATIENT_ID',
+                'VISITS.START_DATE',
+                'VISITS.END_DATE',
+                'VISITS.REASON',
+                'PATIENTS.NAME AS PATIENT_NAME',
+                'PATIENTS.LAST_NAME AS PATIENT_LAST_NAME',
+                'DOCUMENTATIONS.DIAGNOSIS',
+                'DOCUMENTATIONS.TREATMENT_METHOD'
+            )
+            ->first();
+
+        $visit = json_decode(json_encode($visit), true); // Cannot use object of type stdClass as array
+
+        $prescriptionData = DB::table('PRESCRIPTIONS')
+            ->where('VISIT_ID', $visitId)
+            ->select(
+                'ID AS PRESCRIPTION_ID',
+                'EXPIRATION_DATE',
+                'CODE'
+            )
+            ->first();
+
+        $prescriptionData = json_decode(json_encode($prescriptionData), true);
+
+        $medicinesData = '';
+        if ($prescriptionData) {
+            $prescriptionData['expiration_date'] = date('Y-m-d', strtotime($prescriptionData['expiration_date'])); // input oczekuje daty
+
+            $medicinesData = DB::table('PRESCRIPTION_MEDICINES')
+                ->join('MEDICINES', 'PRESCRIPTION_MEDICINES.MEDICINE_ID', '=', 'MEDICINES.ID')
+                ->where('PRESCRIPTION_ID', $prescriptionData['prescription_id'])
+                ->select('PRESCRIPTION_MEDICINES.*', 'MEDICINES.name')
+                ->get();
+
+            $medicinesData = json_decode(json_encode($medicinesData), true);
+        }
+
+        $medicines = self::executeProcedureWithCursor('GET_ALL_MEDICINES');
+
+        return view('doctor.components.edit-visit', compact(
+            'visit',
+            'prescriptionData',
+            'medicinesData',
+            'medicines'
+        ));
+    }
+
+    public function updateVisit(Request $request, $visitId)
+    {
+        dd($visitId);
+
+        $validatedData = $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'reason' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+
+            'diagnosis' => 'required|string',
+            'treatment_method' => 'required|string',
+        ]);
+
+        $medicines = json_decode($request->medicines, true);
+
+        if (count($medicines) > 0) {
+            $rules = [
+                'medicines' => 'required|array',
+                'medicines.*.medicine_id' => 'integer',
+                'medicines.*.dosage' => 'string',
+                'medicines.*.payment' => 'numeric',
+            ];
+
+            $validator = Validator::make(['medicines' => $medicines], $rules);
+
+            if ($validator->fails()) {
+                $errors = $validator->errors()->all();
+                return redirect()->back()->withInput()->with('medicines_errors', $errors);
+            }
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $user = Auth::user();
+            $doctorId = $user->table_id;
+
+            DB::statement("CALL UPDATE_VISIT(?, TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS'), ?)", [
+                $visitId,
+                str_replace('T', ' ', $validatedData['start_date']),
+                str_replace('T', ' ', $validatedData['end_date']),
+                $validatedData['reason']
+            ]);
+
+            DB::statement("CALL UPDATE_DOCUMENTATION(?, ?, ?)", [
+                $visitId,
+                $validatedData['diagnosis'],
+                $validatedData['treatment_method']
+            ]);
+
+            if (count($medicines) > 0) {
+                // dodawanie recepty jeżeli wcześniej nie było leków
+                // jeżeli była to operacja to na obecnej
+                // usuwanie jeśli deleted = true
+
+                // DB::statement("CALL ADD_PRESCRIPTION(?, TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS'))", [
+                //     $visitId,
+                //     str_replace('T', ' ', $validatedData['expiration_date'] ?? self::getDateTime(1)) // addYears = 1
+                // ]);
+
+                // $prescriptionId = DB::table('PRESCRIPTIONS')->max('ID');
+
+                // foreach ($medicines as $medicineData) {
+                //     DB::statement("CALL ADD_PRESCRIPTION_MEDICINE(?, ?, ?, ?)", [
+                //         $prescriptionId,
+                //         $medicineData['id'],
+                //         $medicineData['dosage'],
+                //         $medicineData['payment'],
+                //     ]);
+                // }
+            } else {
+                // usuwanie recepty oraz leków
+            }
+            DB::commit();
+
+            return to_route('doctor.manage.visits')->with('success', 'Wizyta została pomyślnie zaaktualizowana.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return back()->withInput()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
 }
