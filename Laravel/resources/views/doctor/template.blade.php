@@ -62,8 +62,8 @@
         </a>
     </li>
 
-    <li class="menu-item {{ Route::current()->getName() === 'data.specialization-popularity' ? 'active' : '' }}">
-        <a href="" class="menu-link">
+    <li class="menu-item {{ Route::current()->getName() === 'doctor.specialization.popularity' ? 'active' : '' }}">
+        <a href="{{ route('doctor.specialization.popularity')}}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-bar-chart-square"></i>
             <div>Popularność specjalizacji</div>
         </a>

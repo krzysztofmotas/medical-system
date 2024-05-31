@@ -168,4 +168,10 @@ class DoctorController extends Controller
             return back()->withInput()->withErrors(['error' => $e->getMessage()]);
         }
     }
+
+    public function specializationPopularity()
+    {
+        $popularityData = $this->executeProcedureWithCursor('GENERATE_VISIT_COUNT_BY_SPECIALIZATION_REPORT');
+        return view('doctor.components.specialization-popularity', compact('popularityData'));
+    }
 }

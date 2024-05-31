@@ -19,6 +19,7 @@ Route::controller(DoctorController::class)
         Route::get('/all-patients', 'allPatients')->name('doctor.all-patients');
         Route::get('/visits/create', 'createVisit')->name('doctor.create.visit');
         Route::post('/visits/store', 'storeVisit')->name('doctor.store.visit');
+        Route::get('/specialization-popularity', 'specializationPopularity')->name('doctor.specialization.popularity');
     });
 
 Route::controller(PatientController::class)
