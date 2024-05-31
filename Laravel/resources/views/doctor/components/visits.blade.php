@@ -28,9 +28,9 @@
                     <thead>
                         <tr>
                             <th>ID Wizyty</th>
-                            <th>ID Pacjenta</th>
-                            <th>ID Doktora</th>
-                            <th>Przyczyna</th>
+                            <th>Imię i nazwisko pacjenta</th>
+                            <th>Imię i nazwisko lekarza</th>
+                            <th>Powód</th>
                             <th>Początek wizyty</th>
                             <th>Koniec wizyty</th>
                         </tr>
@@ -39,11 +39,11 @@
                         @foreach ($visits as $visit)
                             <tr>
                                 <td>{{ $visit['ID'] }}</td>
-                                <td>{{ $visit['PATIENT_ID'] }}</td>
-                                <td>{{ $visit['DOCTOR_ID'] }}</td>
+                                <td>{{ $visit['PATIENT_NAME'] }} {{ $visit['PATIENT_LAST_NAME'] }}</td>
+                                <td>{{ $visit['DOCTOR_NAME'] }} {{ $visit['DOCTOR_LAST_NAME'] }}</td>
                                 <td>{{ $visit['REASON'] }}</td>
-                                <td>{{ $visit['START_DATE'] }}</td>
-                                <td>{{ $visit['END_DATE'] }}</td>
+                                <td>{{ formatTimestampToDate($visit['START_DATE']) }}</td>
+                                <td>{{ formatTimestampToDate($visit['END_DATE']) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

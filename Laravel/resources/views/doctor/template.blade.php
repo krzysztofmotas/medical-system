@@ -25,6 +25,13 @@
         </a>
     </li>
 
+    <li class="menu-item {{ Route::current()->getName() === 'doctor.manage.visits' ? 'active' : '' }}">
+        <a href="{{ route('doctor.manage.visits') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-edit"></i>
+            <div>Zarządzanie wizytami</div>
+        </a>
+    </li>
+
     <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Analiza danych</span>
     </li>

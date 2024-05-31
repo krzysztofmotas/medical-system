@@ -25,7 +25,6 @@ class DoctorController extends Controller
         if ($specialization) {
             $doctors = self::executeProcedureWithCursor('SEARCH_DOCTORS_BY_SPECIALIZATION', [$specialization]);
         } else {
-
             $doctors = self::executeProcedureWithCursor('GET_ALL_DOCTORS');
         }
 
@@ -197,7 +196,7 @@ class DoctorController extends Controller
             }
             DB::commit();
 
-            return to_route('dashboard.index')->with('success', 'Wizyta została pomyślnie dodana.');
+            return to_route('doctor.manage.visits')->with('success', 'Wizyta została pomyślnie dodana.');
         } catch (Exception $e) {
             DB::rollBack();
             return back()->withInput()->withErrors(['error' => $e->getMessage()]);
@@ -208,5 +207,32 @@ class DoctorController extends Controller
     {
         $popularityData = self::executeProcedureWithCursor('GENERATE_VISIT_COUNT_BY_SPECIALIZATION_REPORT');
         return view('doctor.components.specialization-popularity', compact('popularityData'));
+    }
+
+    public function manageVisits()
+    {
+        $user = Auth::user();
+        $visits = self::executeProcedureWithCursor('GET_DOCTOR_VISITS', [$user->table_id]);
+
+        return view('doctor.components.manage-visits', compact('visits'));
+    }
+
+    public function deleteVisit($visitId)
+    {
+        try {
+            DB::transaction(function () use ($visitId) {
+                DB::statement("CALL DELETE_VISIT_AND_ASSOCIATED_DATA($visitId)");
+            });
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
+        }
+
+        return redirect()
+            ->back()
+            ->with('success', 'Wizyta została pomyślnie usunięta wraz z powiązanymi danymi.');
     }
 }

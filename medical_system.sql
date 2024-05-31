@@ -347,10 +347,7 @@ Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBE
 Insert into MEDICAL_SYSTEM.DOCTORS (ID,NAME,LAST_NAME,SPECIALIZATION,PHONE_NUMBER) values ('10','Jan','Kowalski','Kardiologia','123456789');
 REM INSERTING into MEDICAL_SYSTEM.DOCUMENTATIONS
 SET DEFINE OFF;
-Insert into MEDICAL_SYSTEM.DOCUMENTATIONS (ID,VISIT_ID,DOCUMENTATION_DATE,DIAGNOSIS,TREATMENT_METHOD) values ('1','4',to_timestamp('24/05/31 12:44:36,198160000','RR/MM/DD HH24:MI:SSXFF'),'cokolwiek','test');
-Insert into MEDICAL_SYSTEM.DOCUMENTATIONS (ID,VISIT_ID,DOCUMENTATION_DATE,DIAGNOSIS,TREATMENT_METHOD) values ('21','21',to_timestamp('24/05/31 13:01:11,943496000','RR/MM/DD HH24:MI:SSXFF'),'katar jest aśćdćź','test');
-Insert into MEDICAL_SYSTEM.DOCUMENTATIONS (ID,VISIT_ID,DOCUMENTATION_DATE,DIAGNOSIS,TREATMENT_METHOD) values ('2','5',to_timestamp('24/05/31 12:46:18,869743000','RR/MM/DD HH24:MI:SSXFF'),'furia','furia');
-Insert into MEDICAL_SYSTEM.DOCUMENTATIONS (ID,VISIT_ID,DOCUMENTATION_DATE,DIAGNOSIS,TREATMENT_METHOD) values ('3','6',to_timestamp('24/05/31 12:52:51,086524000','RR/MM/DD HH24:MI:SSXFF'),'nowi followersi','to nie 2005');
+Insert into MEDICAL_SYSTEM.DOCUMENTATIONS (ID,VISIT_ID,DOCUMENTATION_DATE,DIAGNOSIS,TREATMENT_METHOD) values ('41','41',to_timestamp('24/05/31 22:33:58,083812000','RR/MM/DD HH24:MI:SSXFF'),'leki leki','leki leki');
 REM INSERTING into MEDICAL_SYSTEM.FAILED_JOBS
 SET DEFINE OFF;
 REM INSERTING into MEDICAL_SYSTEM.JOB_BATCHES
@@ -409,30 +406,19 @@ Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMB
 Insert into MEDICAL_SYSTEM.PATIENTS (ID,NAME,LAST_NAME,GENDER,ADDRESS,PHONE_NUMBER) values ('9','Barbara','Zielińska','Kobieta','ul. Ogrodowa 4, Katowice','369258147');
 REM INSERTING into MEDICAL_SYSTEM.PRESCRIPTION_MEDICINES
 SET DEFINE OFF;
-Insert into MEDICAL_SYSTEM.PRESCRIPTION_MEDICINES (ID,PRESCRIPTION_ID,MEDICINE_ID,DOSAGE,PAYMENT) values ('1','1','18','2x2','100');
-Insert into MEDICAL_SYSTEM.PRESCRIPTION_MEDICINES (ID,PRESCRIPTION_ID,MEDICINE_ID,DOSAGE,PAYMENT) values ('2','1','5','2x2','100');
-Insert into MEDICAL_SYSTEM.PRESCRIPTION_MEDICINES (ID,PRESCRIPTION_ID,MEDICINE_ID,DOSAGE,PAYMENT) values ('3','2','1','2x100','50');
 REM INSERTING into MEDICAL_SYSTEM.PRESCRIPTIONS
 SET DEFINE OFF;
-Insert into MEDICAL_SYSTEM.PRESCRIPTIONS (ID,VISIT_ID,EXPIRATION_DATE) values ('1','5',to_timestamp('24/05/31 12:46:18,000000000','RR/MM/DD HH24:MI:SSXFF'));
-Insert into MEDICAL_SYSTEM.PRESCRIPTIONS (ID,VISIT_ID,EXPIRATION_DATE) values ('2','6',to_timestamp('24/05/31 12:52:51,000000000','RR/MM/DD HH24:MI:SSXFF'));
 REM INSERTING into MEDICAL_SYSTEM.ROOMS
 SET DEFINE OFF;
 REM INSERTING into MEDICAL_SYSTEM.SESSIONS
 SET DEFINE OFF;
-Insert into MEDICAL_SYSTEM.SESSIONS (ID,USER_ID,IP_ADDRESS,LAST_ACTIVITY) values ('tvoesdbNjG0mdldU4jMBXGku9cWtAdwNSaQcQSg9','85','127.0.0.1','1717171684');
+Insert into MEDICAL_SYSTEM.SESSIONS (ID,USER_ID,IP_ADDRESS,LAST_ACTIVITY) values ('tvoesdbNjG0mdldU4jMBXGku9cWtAdwNSaQcQSg9','85','127.0.0.1','1717187659');
 REM INSERTING into MEDICAL_SYSTEM.USERS
 SET DEFINE OFF;
 Insert into MEDICAL_SYSTEM.USERS (ID,NAME,LAST_NAME,IS_DOCTOR,TABLE_ID) values ('85','Dawid','Wójcik','1','1');
 REM INSERTING into MEDICAL_SYSTEM.VISITS
 SET DEFINE OFF;
-Insert into MEDICAL_SYSTEM.VISITS (ID,PATIENT_ID,DOCTOR_ID,REASON,START_DATE,END_DATE) values ('3','1','1','nie wiem',to_timestamp('24/05/30 09:00:00,000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('24/05/12 12:13:00,000000000','RR/MM/DD HH24:MI:SSXFF'));
-Insert into MEDICAL_SYSTEM.VISITS (ID,PATIENT_ID,DOCTOR_ID,REASON,START_DATE,END_DATE) values ('4','1','1','nie wiem',to_timestamp('24/05/30 09:00:00,000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('24/05/12 12:13:00,000000000','RR/MM/DD HH24:MI:SSXFF'));
-Insert into MEDICAL_SYSTEM.VISITS (ID,PATIENT_ID,DOCTOR_ID,REASON,START_DATE,END_DATE) values ('1','1','1','nie wiem',to_timestamp('24/05/30 09:00:00,000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('24/05/12 12:13:00,000000000','RR/MM/DD HH24:MI:SSXFF'));
-Insert into MEDICAL_SYSTEM.VISITS (ID,PATIENT_ID,DOCTOR_ID,REASON,START_DATE,END_DATE) values ('21','7','1','Katar',to_timestamp('24/05/31 12:59:58,000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('24/05/31 13:01:11,000000000','RR/MM/DD HH24:MI:SSXFF'));
-Insert into MEDICAL_SYSTEM.VISITS (ID,PATIENT_ID,DOCTOR_ID,REASON,START_DATE,END_DATE) values ('2','1','1','nie wiem',to_timestamp('24/05/30 09:00:00,000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('24/05/12 12:13:00,000000000','RR/MM/DD HH24:MI:SSXFF'));
-Insert into MEDICAL_SYSTEM.VISITS (ID,PATIENT_ID,DOCTOR_ID,REASON,START_DATE,END_DATE) values ('5','2','1','furia',to_timestamp('24/05/30 09:00:00,000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('24/05/31 12:46:18,000000000','RR/MM/DD HH24:MI:SSXFF'));
-Insert into MEDICAL_SYSTEM.VISITS (ID,PATIENT_ID,DOCTOR_ID,REASON,START_DATE,END_DATE) values ('6','1','1','dzień dobry',to_timestamp('24/05/31 12:51:51,000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('24/05/31 12:52:51,000000000','RR/MM/DD HH24:MI:SSXFF'));
+Insert into MEDICAL_SYSTEM.VISITS (ID,PATIENT_ID,DOCTOR_ID,REASON,START_DATE,END_DATE) values ('41','1','1','Katarek',to_timestamp('24/05/31 22:33:24,000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('24/05/31 01:33:00,000000000','RR/MM/DD HH24:MI:SSXFF'));
 --------------------------------------------------------
 --  DDL for Index CACHE_KEY_PK
 --------------------------------------------------------
@@ -822,6 +808,24 @@ END DELETE_PRESCRIPTION_MEDICINE;
 
 /
 --------------------------------------------------------
+--  DDL for Procedure DELETE_PRESCRIPTION_MEDICINE_BY_PRESCRIPTION_ID
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "MEDICAL_SYSTEM"."DELETE_PRESCRIPTION_MEDICINE_BY_PRESCRIPTION_ID" (
+    P_PRESCRIPTION_ID IN NUMBER
+)
+AS
+BEGIN
+    DELETE FROM PRESCRIPTION_MEDICINES WHERE PRESCRIPTION_ID = P_PRESCRIPTION_ID;
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+END DELETE_PRESCRIPTION_MEDICINE_BY_PRESCRIPTION_ID;
+
+/
+--------------------------------------------------------
 --  DDL for Procedure DELETE_ROOM
 --------------------------------------------------------
 set define off;
@@ -834,6 +838,93 @@ BEGIN
     DELETE FROM ROOMS WHERE ID = P_ID;
 END DELETE_ROOM;
 
+
+/
+--------------------------------------------------------
+--  DDL for Procedure DELETE_VISIT
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "MEDICAL_SYSTEM"."DELETE_VISIT" (
+    P_ID IN NUMBER
+)
+AS
+BEGIN
+    DELETE FROM VISITS WHERE ID = P_ID;
+END DELETE_VISIT;
+
+/
+--------------------------------------------------------
+--  DDL for Procedure DELETE_VISIT_AND_ASSOCIATED_DATA
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "MEDICAL_SYSTEM"."DELETE_VISIT_AND_ASSOCIATED_DATA" (
+    P_VISIT_ID IN NUMBER
+)
+AS
+    V_DOCUMENTATION_ID NUMBER;
+    V_PRESCRIPTION_ID NUMBER;
+BEGIN
+    -- Pobranie ID dokumentacji medycznej na podstawie wizyty
+    BEGIN
+        SELECT ID INTO V_DOCUMENTATION_ID FROM DOCUMENTATIONS WHERE VISIT_ID = P_VISIT_ID;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            V_DOCUMENTATION_ID := NULL;
+            DBMS_OUTPUT.PUT_LINE('Nie znaleziono dokumentacji medycznej dla tej wizyty.');
+    END;
+    
+    -- Jeśli dokumentacja medyczna istnieje, usuwamy ją
+    IF V_DOCUMENTATION_ID IS NOT NULL THEN
+        -- Usuwanie dokumentacji medycznej
+        DELETE_DOCUMENTATION(V_DOCUMENTATION_ID);
+        
+        -- Debug: Wyświetlenie informacji o usunięciu dokumentacji medycznej
+        DBMS_OUTPUT.PUT_LINE('Dokumentacja medyczna została usunięta.');
+    END IF;
+    
+    BEGIN
+        SELECT ID INTO V_PRESCRIPTION_ID FROM PRESCRIPTIONS WHERE VISIT_ID = P_VISIT_ID;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            V_PRESCRIPTION_ID := NULL;
+            DBMS_OUTPUT.PUT_LINE('Nie znaleziono recepty dla tej wizyty.');
+    END;
+    
+    -- Jeśli recepta istnieje, usuwamy leki przypisane do niej oraz samą receptę
+    IF V_PRESCRIPTION_ID IS NOT NULL THEN
+        -- Usuwanie leków przypisanych do recepty
+        DELETE_PRESCRIPTION_MEDICINE_BY_PRESCRIPTION_ID(V_PRESCRIPTION_ID);
+        
+        -- Debug: Wyświetlenie informacji o usunięciu leków
+        DBMS_OUTPUT.PUT_LINE('Leki przypisane do recepty zostały usunięte.');
+    
+        -- Usuwanie recepty
+        DELETE_PRESCRIPTION(V_PRESCRIPTION_ID);
+        
+        -- Debug: Wyświetlenie informacji o usunięciu recepty
+        DBMS_OUTPUT.PUT_LINE('Recepta została usunięta.');
+    END IF;
+
+    -- Usuwanie wizyty
+    DELETE_VISIT(P_VISIT_ID);
+    
+    -- Debug: Wyświetlenie informacji o usunięciu wizyty
+    DBMS_OUTPUT.PUT_LINE('Wizyta została usunięta.');
+
+    COMMIT;
+
+    -- Debug: Wyświetlenie informacji o sukcesie
+    DBMS_OUTPUT.PUT_LINE('Operacje usuwania zostały zakończone sukcesem.');
+
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+
+        -- Debug: Wyświetlenie informacji o błędzie
+        DBMS_OUTPUT.PUT_LINE('Wystąpił błąd: ' || SQLERRM);
+END DELETE_VISIT_AND_ASSOCIATED_DATA;
 
 /
 --------------------------------------------------------
@@ -1118,10 +1209,50 @@ AS
     visits_cursor SYS_REFCURSOR;
 BEGIN
     OPEN visits_cursor FOR
-        SELECT * FROM VISITS;
+        SELECT 
+            V.ID,
+            P.NAME AS PATIENT_NAME,
+            P.LAST_NAME AS PATIENT_LAST_NAME,
+            D.NAME AS DOCTOR_NAME,
+            D.LAST_NAME AS DOCTOR_LAST_NAME,
+            V.REASON,
+            V.START_DATE,
+            V.END_DATE
+        FROM 
+            VISITS V
+        JOIN 
+            PATIENTS P ON V.PATIENT_ID = P.ID
+        JOIN 
+            DOCTORS D ON V.DOCTOR_ID = D.ID
+        ORDER BY
+            V.START_DATE DESC;
     RETURN visits_cursor;
 END GET_ALL_VISITS;
 
+/
+--------------------------------------------------------
+--  DDL for Function GET_DOCTOR_VISITS
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE FUNCTION "MEDICAL_SYSTEM"."GET_DOCTOR_VISITS" (
+    p_doctor_id IN NUMBER
+) RETURN SYS_REFCURSOR
+AS
+    visit_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN visit_cursor FOR
+        SELECT v.ID AS VISIT_ID,
+               p.NAME AS PATIENT_NAME,
+               p.LAST_NAME AS PATIENT_LAST_NAME,
+               v.START_DATE,
+               v.END_DATE,
+               v.REASON
+        FROM MEDICAL_SYSTEM.VISITS v
+        JOIN MEDICAL_SYSTEM.PATIENTS p ON v.PATIENT_ID = p.ID
+        WHERE v.DOCTOR_ID = p_doctor_id
+        ORDER BY v.START_DATE DESC;
+    RETURN visit_cursor;
+END GET_DOCTOR_VISITS;
 
 /
 --------------------------------------------------------
