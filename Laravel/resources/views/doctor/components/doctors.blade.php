@@ -6,11 +6,14 @@
     <div class="card">
         <h5 class="card-header">Lista lekarzy</h5>
 
-        <!-- Search form -->
-        <form method="GET" action="{{ route('doctor.search-doctors') }}" class="mx-4 my-3">
-            <div class="input-group w-25">
-                <input type="text" name="specialization" class="form-control" placeholder="Wyszukaj po specjalizacji" value="{{ $specialization ?? '' }}">
-                <button type="submit" class="btn btn-primary">Szukaj</button>
+        <form method="get" class="mx-4 mb-3">
+            <div class="row">
+                <div class="col-auto">
+                    <div class="input-group">
+                        <input type="text" name="specialization" class="form-control" placeholder="Wyszukaj po specjalizacji" value="{{ $specialization ?? '' }}">
+                        <button type="submit" class="btn btn-primary">Szukaj</button>
+                    </div>
+                </div>
             </div>
         </form>
 

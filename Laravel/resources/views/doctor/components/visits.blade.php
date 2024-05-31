@@ -4,9 +4,26 @@
 
 @section('component-content')
     <div class="card">
-        <h5 class="card-header">Wszystkie wizyty</h5>
-        <div class="card-body">
-            @if (!empty($visits))
+        <h5 class="card-header">Wizyty</h5>
+
+        <form method="get" class="mx-4 mb-3">
+            <div class="row">
+                <div class="col-auto">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="last_name" name="last_name" required
+                            placeholder="Podaj nazwisko pacjenta">
+                        <button type="submit" class="btn btn-primary">Szukaj</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        @if (empty($visits))
+            <div class="alert alert-danger mx-4" role="alert">
+                Nie znaleziono żadnych wizyt.
+            </div>
+        @else
+            <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
                         <tr>
@@ -18,7 +35,7 @@
                             <th>Koniec wizyty</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="table-border-bottom-0">
                         @foreach ($visits as $visit)
                             <tr>
                                 <td>{{ $visit['ID'] }}</td>
@@ -31,11 +48,7 @@
                         @endforeach
                     </tbody>
                 </table>
-            @else
-                <div class="alert alert-danger" role="alert">
-                    No visits found.
-                </div>
-            @endif
-        </div>
+            </div>
+        @endif
     </div>
 @endsection

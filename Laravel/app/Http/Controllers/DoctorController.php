@@ -14,45 +14,47 @@ class DoctorController extends Controller
 {
     public function expensiveMedicines()
     {
-        $medicines = $this->executeProcedureWithCursor('SEARCH_EXPENSIVE_MEDICINES');
+        $medicines = self::executeProcedureWithCursor('SEARCH_EXPENSIVE_MEDICINES');
         return view('doctor.components.expensive-medicines', compact('medicines'));
     }
 
-    public function allDoctors()
-    {
-        $doctors = $this->executeProcedureWithCursor('GET_ALL_DOCTORS');
-        return view('doctor.components.all-doctors', compact('doctors'));
-    }
-
-    public function searchDoctorsBySpecialization(Request $request)
+    public function doctors(Request $request)
     {
         $specialization = $request->input('specialization');
-        $doctors = $this->executeProcedureWithCursor('SEARCH_DOCTORS_BY_SPECIALIZATION', [$specialization]);
-        return view('doctor.components.search-doctors', compact('doctors', 'specialization'));
+
+        if ($specialization) {
+            $doctors = self::executeProcedureWithCursor('SEARCH_DOCTORS_BY_SPECIALIZATION', [$specialization]);
+        } else {
+
+            $doctors = self::executeProcedureWithCursor('GET_ALL_DOCTORS');
+        }
+
+        return view('doctor.components.doctors', compact('doctors'));
     }
 
     public function doctorPatientCountReport()
     {
-        $report = $this->executeProcedureWithCursor('GENERATE_DOCTOR_PATIENT_COUNT_REPORT');
+        $report = self::executeProcedureWithCursor('GENERATE_DOCTOR_PATIENT_COUNT_REPORT');
         return view('doctor.components.doctor-patient-count-report', compact('report'));
     }
 
     public function allPatients()
     {
-        $patients = $this->executeProcedureWithCursor('GET_ALL_PATIENTS');
+        $patients = self::executeProcedureWithCursor('GET_ALL_PATIENTS');
         return view('doctor.components.all-patients', compact('patients'));
     }
 
-    public function allVisits()
-    {
-        $visits = $this->executeProcedureWithCursor('GET_ALL_VISITS');
-        return view('doctor.components.all-visits', compact('visits'));
-    }
-    public function searchVisitsByPatientLastName(Request $request)
+    public function visits(Request $request)
     {
         $lastName = $request->input('last_name');
-        $visits = $this->executeProcedureWithCursor('SEARCH_VISITS_BY_PATIENT_LAST_NAME', [$lastName]);
-        return view('doctor.components.search-visits', compact('visits', 'lastName'));
+
+        if ($lastName) {
+            $visits = self::executeProcedureWithCursor('SEARCH_VISITS_BY_PATIENT_LAST_NAME', [$lastName]);
+        } else {
+            $visits = self::executeProcedureWithCursor('GET_ALL_VISITS');
+        }
+
+        return view('doctor.components.visits', compact('visits', 'lastName'));
     }
 
     private function executeProcedureWithCursor($procedureName, $params = [])
@@ -61,7 +63,6 @@ class DoctorController extends Controller
         $sql = "BEGIN :result := $procedureName(";
         $placeholders = [];
 
-        // Build the placeholders for the parameters
         foreach ($params as $index => $param) {
             $placeholders[] = ":param$index";
         }
@@ -70,10 +71,8 @@ class DoctorController extends Controller
         $stmt = oci_parse($conn, $sql);
         $cursor = oci_new_cursor($conn);
 
-        // Bind the cursor
         oci_bind_by_name($stmt, ':result', $cursor, -1, OCI_B_CURSOR);
 
-        // Bind the parameters
         foreach ($params as $index => $param) {
             oci_bind_by_name($stmt, ":param$index", $params[$index]);
         }
@@ -91,7 +90,7 @@ class DoctorController extends Controller
 
     public function createVisit()
     {
-        $medicines = $this->executeProcedureWithCursor('GET_ALL_MEDICINES');
+        $medicines = self::executeProcedureWithCursor('GET_ALL_MEDICINES');
         $currentDateTime = self::getDateTime();
 
         return view('doctor.components.create-visit', compact(
@@ -102,7 +101,7 @@ class DoctorController extends Controller
 
     function getPatientId($firstName, $lastName)
     {
-        $result = DB::select('SELECT get_patient_id(:first_name, :last_name) AS patient_id FROM dual', [
+        $result = DB::select('SELECT GET_PATIENT_ID(:first_name, :last_name) AS patient_id FROM dual', [
             'first_name' => $firstName,
             'last_name' => $lastName,
         ]);
@@ -207,7 +206,7 @@ class DoctorController extends Controller
 
     public function specializationPopularity()
     {
-        $popularityData = $this->executeProcedureWithCursor('GENERATE_VISIT_COUNT_BY_SPECIALIZATION_REPORT');
+        $popularityData = self::executeProcedureWithCursor('GENERATE_VISIT_COUNT_BY_SPECIALIZATION_REPORT');
         return view('doctor.components.specialization-popularity', compact('popularityData'));
     }
 }

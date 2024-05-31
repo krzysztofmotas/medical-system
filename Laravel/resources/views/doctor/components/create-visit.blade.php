@@ -3,8 +3,6 @@
 @section('title', 'Nowa wizyta')
 
 @section('component-content')
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Strona główna /</span> Nowa wizyta</h4>
-
     @error('error')
         <div class="alert alert-danger alert-dismissible" role="alert">
             {{ $message }}

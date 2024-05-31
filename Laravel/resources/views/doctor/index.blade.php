@@ -11,7 +11,7 @@
                 <p class="card-text">
                     Sprawdź listę lekarzy
                 </p>
-                <a href="{{ route('doctor.all-doctors') }}" class="btn btn-outline-primary">Przejdź</a>
+                <a href="{{ route('doctor.doctors') }}" class="btn btn-outline-primary">Przejdź</a>
             </div>
         </div>
         <div class="card h-auto w-25 mx-2">

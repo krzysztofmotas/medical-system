@@ -420,7 +420,7 @@ REM INSERTING into MEDICAL_SYSTEM.ROOMS
 SET DEFINE OFF;
 REM INSERTING into MEDICAL_SYSTEM.SESSIONS
 SET DEFINE OFF;
-Insert into MEDICAL_SYSTEM.SESSIONS (ID,USER_ID,IP_ADDRESS,LAST_ACTIVITY) values ('tvoesdbNjG0mdldU4jMBXGku9cWtAdwNSaQcQSg9','85','127.0.0.1','1717154839');
+Insert into MEDICAL_SYSTEM.SESSIONS (ID,USER_ID,IP_ADDRESS,LAST_ACTIVITY) values ('tvoesdbNjG0mdldU4jMBXGku9cWtAdwNSaQcQSg9','85','127.0.0.1','1717171684');
 REM INSERTING into MEDICAL_SYSTEM.USERS
 SET DEFINE OFF;
 Insert into MEDICAL_SYSTEM.USERS (ID,NAME,LAST_NAME,IS_DOCTOR,TABLE_ID) values ('85','Dawid','Wójcik','1','1');
@@ -944,15 +944,13 @@ END UPDATE_ROOM;
 --------------------------------------------------------
 
   CREATE OR REPLACE EDITIONABLE FUNCTION "MEDICAL_SYSTEM"."CALCULATE_AVERAGE_MEDICINE_PRICE" 
-RETURN SYS_REFCURSOR
+RETURN NUMBER
 AS
-    average_price_cursor SYS_REFCURSOR;
+    AVERAGE_PRICE NUMBER;
 BEGIN
-    OPEN average_price_cursor FOR
-        SELECT AVG(PRICE) AS AVERAGE_PRICE FROM MEDICINES;
-    RETURN average_price_cursor;
+    SELECT AVG(PRICE) INTO AVERAGE_PRICE FROM MEDICINES;
+    RETURN AVERAGE_PRICE;
 END CALCULATE_AVERAGE_MEDICINE_PRICE;
-
 
 /
 --------------------------------------------------------
@@ -968,10 +966,10 @@ BEGIN
         SELECT D.*, COUNT(V.PATIENT_ID) AS PATIENT_COUNT
         FROM DOCTORS D
         LEFT JOIN VISITS V ON D.ID = V.DOCTOR_ID
-        GROUP BY D.ID, D.NAME, D.LAST_NAME, D.SPECIALIZATION, D.PHONE_NUMBER;
+        GROUP BY D.ID, D.NAME, D.LAST_NAME, D.SPECIALIZATION, D.PHONE_NUMBER
+        ORDER BY PATIENT_COUNT DESC;
     RETURN doctor_patient_count_cursor;
 END GENERATE_DOCTOR_PATIENT_COUNT_REPORT;
-
 
 /
 --------------------------------------------------------
@@ -1239,10 +1237,9 @@ AS
     doctors_by_specialization_cursor SYS_REFCURSOR;
 BEGIN
     OPEN doctors_by_specialization_cursor FOR
-        SELECT * FROM DOCTORS WHERE SPECIALIZATION = P_SPECIALIZATION;
+        SELECT * FROM DOCTORS WHERE UPPER(SPECIALIZATION) = UPPER(P_SPECIALIZATION);
     RETURN doctors_by_specialization_cursor;
 END SEARCH_DOCTORS_BY_SPECIALIZATION;
-
 
 /
 --------------------------------------------------------
@@ -1326,10 +1323,9 @@ BEGIN
         FROM VISITS V
         INNER JOIN PATIENTS P ON V.PATIENT_ID = P.ID
         INNER JOIN DOCTORS D ON V.DOCTOR_ID = D.ID
-        WHERE P.LAST_NAME LIKE '%' || P_LAST_NAME || '%';
+        WHERE UPPER(P.LAST_NAME) LIKE '%' || UPPER(P_LAST_NAME) || '%';
     RETURN visits_by_patient_last_name_cursor;
 END SEARCH_VISITS_BY_PATIENT_LAST_NAME;
-
 
 /
 --------------------------------------------------------

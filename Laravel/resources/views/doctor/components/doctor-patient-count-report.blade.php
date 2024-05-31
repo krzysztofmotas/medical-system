@@ -1,24 +1,29 @@
 @extends('doctor.template')
 
-@section('title', 'Doctor Patient Count Report')
+@section('title', 'Lekarze z największą liczbą wizyt')
 
 @section('component-content')
     <div class="card">
-        <h5 class="card-header">Doctor Patient Count Report</h5>
-        <div class="card-body">
-            @if (!empty($report))
+        <h5 class="card-header">Lekarze z największą liczbą wizyt</h5>
+
+        @if (empty($report))
+            <div class="alert alert-danger mx-4" role="alert">
+                Nie znaleziono żadnych danych.
+            </div>
+        @else
+            <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Last Name</th>
-                            <th>Specialization</th>
-                            <th>Phone Number</th>
-                            <th>Patient Count</th>
+                            <th>ID Doktora</th>
+                            <th>Imię</th>
+                            <th>Nazwisko</th>
+                            <th>Specjalizacja</th>
+                            <th>Numer telefonu</th>
+                            <th>Całkowita liczba wszystkich wizyt</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="table-border-bottom-0">
                         @foreach ($report as $doctor)
                             <tr>
                                 <td>{{ $doctor['ID'] }}</td>
@@ -31,11 +36,7 @@
                         @endforeach
                     </tbody>
                 </table>
-            @else
-                <div class="alert alert-danger" role="alert">
-                    No data available.
-                </div>
-            @endif
-        </div>
+            </div>
+        @endif
     </div>
 @endsection

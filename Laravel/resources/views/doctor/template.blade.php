@@ -1,6 +1,8 @@
 @extends('shared.dashboard')
 
 @section('content')
+    {{-- <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Strona główna /</span> Nowa wizyta</h4> --}}
+
     @yield('component-content')
 @endsection
 
@@ -97,8 +99,8 @@
         </a>
     </li>
 
-    <li class="menu-item {{ Route::current()->getName() === 'doctor.visits.search' ? 'active' : '' }}">
-        <a href="{{ route('doctor.visits.search') }}" class="menu-link">
+    <li class="menu-item {{ Route::current()->getName() === 'doctor.visits' ? 'active' : '' }}">
+        <a href="{{ route('doctor.visits') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-calendar-check"></i>
             <div>Wizyty</div>
         </a>
@@ -115,8 +117,8 @@
         </a>
     </li>
 
-    <li class="menu-item {{ Route::current()->getName() === 'doctor.all-doctors' ? 'active' : '' }}">
-        <a href="{{ route('doctor.all-doctors') }}" class="menu-link">
+    <li class="menu-item {{ Route::current()->getName() === 'doctor.doctors' ? 'active' : '' }}">
+        <a href="{{ route('doctor.doctors') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-plus-medical"></i>
             <div>Lekarze</div>
         </a>

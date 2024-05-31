@@ -15,15 +15,13 @@ Route::controller(DashboardController::class)
 Route::controller(DoctorController::class)
     ->group(function () {
         Route::get('/expensive-medicines', 'expensiveMedicines')->name('doctor.expensive.medicines');
-        Route::get('/all-doctors', 'allDoctors')->name('doctor.all-doctors');
-        Route::get('/all-doctors/search', 'searchDoctorsBySpecialization')->name('doctor.search-doctors');
+        Route::get('/doctors', 'doctors')->name('doctor.doctors');
         Route::get('/all-patients', 'allPatients')->name('doctor.all-patients');
         Route::get('/visits/create', 'createVisit')->name('doctor.create.visit');
         Route::post('/visits/store', 'storeVisit')->name('doctor.store.visit');
         Route::get('/specialization-popularity', 'specializationPopularity')->name('doctor.specialization.popularity');
         Route::get('/doctor-patient-count-report', 'doctorPatientCountReport')->name('doctor.patient.count.report');
-        Route::get('/all-visits', 'allVisits')->name('doctor.visits.all');
-        Route::get('/search-visits', 'searchVisitsByPatientLastName')->name('doctor.visits.search');
+        Route::get('/visits', 'visits')->name('doctor.visits');
     });
 
 Route::controller(PatientController::class)

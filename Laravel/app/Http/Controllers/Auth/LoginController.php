@@ -40,9 +40,9 @@ class LoginController extends Controller
         $isLoggedIn = false;
 
         if ($is_doctor) {
-            $isLoggedIn = $this->loginDoctor($name, $last_name);
+            $isLoggedIn = self::loginDoctor($name, $last_name);
         } else {
-            $isLoggedIn = $this->loginPatient($name, $last_name);
+            $isLoggedIn = self::loginPatient($name, $last_name);
         }
 
         if ($isLoggedIn) {
@@ -52,7 +52,7 @@ class LoginController extends Controller
             $user->name = $name;
             $user->last_name = $last_name;
             $user->is_doctor = $is_doctor;
-            $user->table_id = $this->getUserTableId($user);
+            $user->table_id = self::getUserTableId($user);
             $user->save();
 
             Auth::login($user);
