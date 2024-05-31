@@ -65,7 +65,7 @@
                 </div>
 
                 <input type="hidden" name="medicines" id="selectedMedicinesField" />
-                <button class="btn btn-primary" type="submit">Stwórz wizytę</button>
+                <button class="btn btn-primary mb-3" type="submit">Stwórz wizytę</button>
             </div>
 
             <div class="col-md-6">
@@ -142,17 +142,19 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Lista leków</h5>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Nazwa leku</th>
-                                    <th scope="col">Dawkowanie</th>
-                                    <th scope="col">Odpłatność</th>
-                                    <th scope="col">Akcje</th>
-                                </tr>
-                            </thead>
-                            <tbody id="medicinesTableBody"></tbody>
-                        </table>
+                        <div class="table-responsive text-nowrap">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nazwa leku</th>
+                                        <th scope="col">Dawkowanie</th>
+                                        <th scope="col">Odpłatność</th>
+                                        <th scope="col">Akcje</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="medicinesTableBody"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
