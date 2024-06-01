@@ -20,4 +20,12 @@ class PatientController extends Controller
 
         return view('patient.components.prescriptions', compact('prescriptions'));
     }
+
+    public function visits()
+    {
+        $user = Auth::user();
+        $visits = executeFunctionWithCursor('GET_PATIENT_VISITS', [$user->table_id]);
+
+        return view('patient.components.visits', compact('visits'));
+    }
 }

@@ -17,9 +17,9 @@
                         <tr>
                             <th>ID Recepty</th>
                             <th>Imię i nazwisko lekarza</th>
+                            <th>Specjalizacja</th>
                             <th>Data wystawienia</th>
-                            <th>Data ważności</th>
-                            <th></th>
+                            <th colspan="2">Data ważności</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -27,6 +27,7 @@
                             <tr>
                                 <td>{{ $prescription['ID'] }}</td>
                                 <td>{{ $prescription['DOCTOR_NAME'] }} {{ $prescription['DOCTOR_LAST_NAME'] }}</td>
+                                <td>{{ $prescription['DOCTOR_SPECIALIZATION'] }}</td>
                                 <td>{{ formatTimestampToDate($prescription['START_DATE']) }}</td>
                                 <td>{{ formatTimestampToDate($prescription['EXPIRATION_DATE']) }}</td>
                                 <td>
@@ -44,7 +45,7 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Zamknij"></button>
                                                 </div>
-                                                <div class="modal-body">
+                                                <div class="modal-body pt-2">
                                                     <div class="row mb-3">
                                                         <div class="col">
                                                             <strong>Kod recepty:</strong>
@@ -74,10 +75,14 @@
                                                             <ul class="list-group">
                                                                 @foreach ($prescription['medicines'] as $medicine)
                                                                     <li class="list-group-item">
-                                                                        <strong>Nazwa:</strong> {{ $medicine['MEDICINE_NAME'] }}<br>
-                                                                        <strong>Dawkowanie:</strong> {{ $medicine['DOSAGE'] }}<br>
-                                                                        <strong>Odpłatność:</strong> {{ $medicine['PAYMENT'] }}%<br>
-                                                                        <strong>Cena:</strong> {{ $medicine['MEDICINE_PRICE'] }} zł
+                                                                        <strong>Nazwa:</strong>
+                                                                        {{ $medicine['MEDICINE_NAME'] }}<br>
+                                                                        <strong>Dawkowanie:</strong>
+                                                                        {{ $medicine['DOSAGE'] }}<br>
+                                                                        <strong>Odpłatność:</strong>
+                                                                        {{ $medicine['PAYMENT'] }}%<br>
+                                                                        <strong>Cena:</strong>
+                                                                        {{ $medicine['MEDICINE_PRICE'] }} zł
                                                                     </li>
                                                                 @endforeach
                                                             </ul>

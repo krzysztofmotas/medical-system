@@ -304,7 +304,7 @@ class DoctorController extends Controller
                 if (!$prescription) {
                     DB::statement("CALL ADD_PRESCRIPTION(?, TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS'))", [
                         $visitId,
-                        str_replace('T', ' ', $request->input('expiration_date') ?? getDateTime(1)) // addYears = 1, todo
+                        str_replace('T', ' ', $request->input('expiration_date') ?? getDateTime(1)) // addYears = 1
                     ]);
 
                     $prescriptionId = DB::table('PRESCRIPTIONS')->max('ID');
@@ -416,6 +416,7 @@ class DoctorController extends Controller
         $visitsData = executeFunctionWithCursor('CALCULATE_AVERAGE_VISIT_TIME');
         return view('doctor.components.visits-duration', compact('visitsData'));
     }
+
     public function topDiagnoses(Request $request)
     {
         $topCount = $request->input('top_count', 10);
