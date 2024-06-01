@@ -92,6 +92,13 @@
         </a>
     </li>
 
+    <li class="menu-item {{ Route::current()->getName() === 'doctor.gender.visits.by.age' ? 'active' : '' }}">
+        <a href="{{ route('doctor.gender.visits.by.age') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bxs-pie-chart-alt"></i>
+            <div>Rozkład płci pacjentów względem wieku</div>
+        </a>
+    </li>
+
     <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Inne</span>
     </li>

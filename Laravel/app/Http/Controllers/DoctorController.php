@@ -433,4 +433,36 @@ class DoctorController extends Controller
 
         return view('doctor.components.average-visits-by-age', compact('visitsByAge'));
     }
+
+    public function genderVisitsByAge()
+    {
+        $ageRanges = [
+            ['start' => 0, 'end' => 9],
+            ['start' => 10, 'end' => 18],
+            ['start' => 19, 'end' => 29],
+            ['start' => 30, 'end' => 59],
+            ['start' => 60, 'end' => null],
+        ];
+
+        $visitsByAge = [];
+
+        foreach ($ageRanges as $range) {
+            $results = DB::select("
+                SELECT calculate_gender_percentage(:ageStart, :ageEnd) AS gender_cursor FROM dual
+            ", [
+                'ageStart' => $range['start'],
+                'ageEnd' => $range['end']
+            ]);
+
+            $visitsByAge[] = [
+                'range' => "{$range['start']} - {$range['end']}",
+                'data' => $results
+            ];
+        }
+
+        return view('doctor.components.gender-visits-by-age', compact('visitsByAge'));
+    }
+
+
+
 }

@@ -32,6 +32,7 @@ Route::controller(DoctorController::class)
         Route::get('/visits-duration', 'visitsDuration')->name('doctor.visits.duration');
         Route::get('/top-diagnoses', 'topDiagnoses')->name('doctor.top.diagnoses');
         Route::get('/doctor/average-visits-by-age', 'averageVisitsByAge')->name('doctor.average.visits.by.age');
+        Route::get('/doctor/gender-visits-by-age', 'genderVisitsByAge')->name('doctor.gender.visits.by.age');
     });
 
 Route::controller(PatientController::class)
