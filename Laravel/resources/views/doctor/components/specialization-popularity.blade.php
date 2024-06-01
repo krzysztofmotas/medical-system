@@ -22,7 +22,7 @@
                     <tbody class="table-border-bottom-0">
                         @foreach ($popularityData as $index => $specialization)
                             <tr>
-                                <td>{{ $index }}</td>
+                                <td>{{ $index + 1 }}</td>
                                 <td>{{ $specialization['SPECIALIZATION'] }}</td>
                                 <td>{{ $specialization['VISIT_COUNT'] }}</td>
                             </tr>

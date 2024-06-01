@@ -22,6 +22,21 @@ class LoginController extends Controller
         return to_route('dashboard.index');
     }
 
+    function getUserTableId(User $user)
+    {
+        $result = DB::table($user->is_doctor ? 'doctors' : 'patients')
+            ->select('id')
+            ->whereRaw('LOWER(name) = LOWER(?)', [$user->name])
+            ->whereRaw('LOWER(last_name) = LOWER(?)', [$user->last_name])
+            ->first();
+
+        if ($result) {
+            return $result->id;
+        }
+
+        return null;
+    }
+
     public function authenticate(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -35,9 +50,9 @@ class LoginController extends Controller
 
         $name = $request->input('name');
         $last_name = $request->input('last_name');
-        $is_doctor = (boolean) $request->has('is_doctor');
+        $is_doctor = (bool) $request->has('is_doctor');
 
-        $isLoggedIn = $is_doctor ? self::doctorExists($name, $last_name) : self::patientExists($name, $last_name);
+        $isLoggedIn = $is_doctor ? doctorExists($name, $last_name) : patientExists($name, $last_name);
 
         if ($isLoggedIn) {
             User::truncate();
@@ -59,49 +74,6 @@ class LoginController extends Controller
                 ->withInput()
                 ->with('error', 'Nieprawidłowe dane logowania.');
         }
-    }
-
-    private function getUserTableId(User $user)
-    {
-        $result = DB::table($user->is_doctor ? 'doctors' : 'patients')
-            ->select('id')
-            ->whereRaw('LOWER(name) = LOWER(?)', [$user->name])
-            ->whereRaw('LOWER(last_name) = LOWER(?)', [$user->last_name])
-            ->first();
-
-        if ($result) {
-            return $result->id;
-        }
-
-        return null;
-    }
-
-    public static function doctorExists($name, $last_name)
-    {
-        $query = "SELECT LOGIN_DOCTOR(:name, :last_name) AS result FROM DUAL";
-
-        $bindings = [
-            ':name' => $name,
-            ':last_name' => $last_name,
-        ];
-
-        $result = DB::connection()->selectOne($query, $bindings);
-
-        return $result->result;
-    }
-
-    public static function patientExists($name, $last_name)
-    {
-        $query = "SELECT LOGIN_PATIENT(:name, :last_name) AS result FROM DUAL";
-
-        $bindings = [
-            ':name' => $name,
-            ':last_name' => $last_name,
-        ];
-
-        $result = DB::connection()->selectOne($query, $bindings);
-
-        return $result->result;
     }
 
     public function registerView()
@@ -128,7 +100,7 @@ class LoginController extends Controller
         $name = $request->input('name');
         $last_name = $request->input('last_name');
 
-        $exists = self::patientExists($name, $last_name);
+        $exists = patientExists($name, $last_name);
 
         if (!$exists) {
             $result = DB::statement("CALL ADD_PATIENT(?, ?, ?, ?, ?, ?)", [

@@ -15,7 +15,7 @@ class DoctorController extends Controller
 {
     public function expensiveMedicines()
     {
-        $medicines = self::executeFunctionWithCursor('SEARCH_EXPENSIVE_MEDICINES');
+        $medicines = executeFunctionWithCursor('SEARCH_EXPENSIVE_MEDICINES');
         return view('doctor.components.expensive-medicines', compact('medicines'));
     }
 
@@ -24,9 +24,9 @@ class DoctorController extends Controller
         $specialization = $request->input('specialization');
 
         if ($specialization) {
-            $doctors = self::executeFunctionWithCursor('SEARCH_DOCTORS_BY_SPECIALIZATION', [$specialization]);
+            $doctors = executeFunctionWithCursor('SEARCH_DOCTORS_BY_SPECIALIZATION', [$specialization]);
         } else {
-            $doctors = self::executeFunctionWithCursor('GET_ALL_DOCTORS');
+            $doctors = executeFunctionWithCursor('GET_ALL_DOCTORS');
         }
 
         return view('doctor.components.doctors', compact('doctors'));
@@ -34,13 +34,13 @@ class DoctorController extends Controller
 
     public function doctorPatientCountReport()
     {
-        $report = self::executeFunctionWithCursor('GENERATE_DOCTOR_PATIENT_COUNT_REPORT');
+        $report = executeFunctionWithCursor('GENERATE_DOCTOR_PATIENT_COUNT_REPORT');
         return view('doctor.components.doctor-patient-count-report', compact('report'));
     }
 
     public function allPatients()
     {
-        $patients = self::executeFunctionWithCursor('GET_ALL_PATIENTS');
+        $patients = executeFunctionWithCursor('GET_ALL_PATIENTS');
         return view('doctor.components.all-patients', compact('patients'));
     }
 
@@ -49,75 +49,23 @@ class DoctorController extends Controller
         $lastName = $request->input('last_name');
 
         if ($lastName) {
-            $visits = self::executeFunctionWithCursor('SEARCH_VISITS_BY_PATIENT_LAST_NAME', [$lastName]);
+            $visits = executeFunctionWithCursor('SEARCH_VISITS_BY_PATIENT_LAST_NAME', [$lastName]);
         } else {
-            $visits = self::executeFunctionWithCursor('GET_ALL_VISITS');
+            $visits = executeFunctionWithCursor('GET_ALL_VISITS');
         }
 
         return view('doctor.components.visits', compact('visits', 'lastName'));
     }
 
-    private function executeFunctionWithCursor($procedureName, $params = [])
-    {
-        $conn = DB::getPdo()->getResource();
-        $sql = "BEGIN :result := $procedureName(";
-        $placeholders = [];
-
-        foreach ($params as $index => $param) {
-            $placeholders[] = ":param$index";
-        }
-
-        $sql .= implode(', ', $placeholders) . "); END;";
-        $stmt = oci_parse($conn, $sql);
-        $cursor = oci_new_cursor($conn);
-
-        oci_bind_by_name($stmt, ':result', $cursor, -1, OCI_B_CURSOR);
-
-        foreach ($params as $index => $param) {
-            oci_bind_by_name($stmt, ":param$index", $params[$index]);
-        }
-
-        oci_execute($stmt);
-        oci_execute($cursor, OCI_DEFAULT);
-        oci_fetch_all($cursor, $results, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
-
-        oci_free_statement($stmt);
-        oci_free_statement($cursor);
-        oci_close($conn);
-
-        return $results;
-    }
-
     public function createVisit()
     {
-        $medicines = self::executeFunctionWithCursor('GET_ALL_MEDICINES');
-        $currentDateTime = self::getDateTime();
+        $medicines = executeFunctionWithCursor('GET_ALL_MEDICINES');
+        $currentDateTime = getDateTime();
 
         return view('doctor.components.create-visit', compact(
             'medicines',
             'currentDateTime'
         ));
-    }
-
-    function getPatientId($firstName, $lastName)
-    {
-        $result = DB::select('SELECT GET_PATIENT_ID(:first_name, :last_name) AS patient_id FROM dual', [
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-        ]);
-
-        return $result[0]->patient_id ?? null;
-    }
-
-    function getDateTime($addYears = 0)
-    {
-        $dateTime = Carbon::now();
-
-        if ($addYears != 0) {
-            $dateTime->addYears($addYears);
-        }
-
-        return $dateTime->format('Y-m-d H:i:s');
     }
 
     public function storeVisit(Request $request)
@@ -150,7 +98,7 @@ class DoctorController extends Controller
                 return redirect()->back()->withInput()->with('medicines_errors', $errors);
             }
         }
-        $patientId = self::getPatientId($validatedData['first_name'], $validatedData['last_name']);
+        $patientId = getPatientId($validatedData['first_name'], $validatedData['last_name']);
 
         if (!$patientId) {
             return back()->withInput()->withErrors(['last_name' => 'Pacjent o podanym imieniu i nazwisku nie został znaleziony.']);
@@ -167,7 +115,7 @@ class DoctorController extends Controller
                 $doctorId,
                 $validatedData['reason'],
                 str_replace('T', ' ', $validatedData['start_date']),
-                str_replace('T', ' ', $validatedData['end_date'] ?? self::getDateTime())
+                str_replace('T', ' ', $validatedData['end_date'] ?? getDateTime())
             ]);
 
             $visitId = DB::table('VISITS')->max('ID');
@@ -181,7 +129,7 @@ class DoctorController extends Controller
             if ($medicines && count($medicines) > 0) {
                 DB::statement("CALL ADD_PRESCRIPTION(?, TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS'))", [
                     $visitId,
-                    str_replace('T', ' ', $request->input('expiration_date') ?? self::getDateTime(1)) // addYears = 1
+                    str_replace('T', ' ', $request->input('expiration_date') ?? getDateTime(1)) // addYears = 1
                 ]);
 
                 $prescriptionId = DB::table('PRESCRIPTIONS')->max('ID');
@@ -206,14 +154,14 @@ class DoctorController extends Controller
 
     public function specializationPopularity()
     {
-        $popularityData = self::executeFunctionWithCursor('GENERATE_VISIT_COUNT_BY_SPECIALIZATION_REPORT');
+        $popularityData = executeFunctionWithCursor('GENERATE_VISIT_COUNT_BY_SPECIALIZATION_REPORT');
         return view('doctor.components.specialization-popularity', compact('popularityData'));
     }
 
     public function manageVisits()
     {
         $user = Auth::user();
-        $visits = self::executeFunctionWithCursor('GET_DOCTOR_VISITS', [$user->table_id]);
+        $visits = executeFunctionWithCursor('GET_DOCTOR_VISITS', [$user->table_id]);
 
         return view('doctor.components.manage-visits', compact('visits'));
     }
@@ -282,7 +230,7 @@ class DoctorController extends Controller
             $medicinesData = json_decode(json_encode($medicinesData), true);
         }
 
-        $medicines = self::executeFunctionWithCursor('GET_ALL_MEDICINES');
+        $medicines = executeFunctionWithCursor('GET_ALL_MEDICINES');
 
         return view('doctor.components.edit-visit', compact(
             'visit',
@@ -356,7 +304,7 @@ class DoctorController extends Controller
                 if (!$prescription) {
                     DB::statement("CALL ADD_PRESCRIPTION(?, TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS'))", [
                         $visitId,
-                        str_replace('T', ' ', $request->input('expiration_date') ?? self::getDateTime(1)) // addYears = 1, todo
+                        str_replace('T', ' ', $request->input('expiration_date') ?? getDateTime(1)) // addYears = 1, todo
                     ]);
 
                     $prescriptionId = DB::table('PRESCRIPTIONS')->max('ID');
@@ -409,7 +357,7 @@ class DoctorController extends Controller
 
     public function medicines()
     {
-        $medicines = self::executeFunctionWithCursor('GET_ALL_MEDICINES');
+        $medicines = executeFunctionWithCursor('GET_ALL_MEDICINES');
         return view('doctor.components.medicines', compact('medicines'));
     }
 
@@ -438,28 +386,13 @@ class DoctorController extends Controller
             ->with('success', 'Nowy lek o nazwie ' . $name . ' i cenie ' . $price . ' zł został pomyślnie dodany.');
     }
 
-    private function getDoctorTableId($name, $lastName)
-    {
-        $result = DB::table('doctors')
-            ->select('id')
-            ->whereRaw('LOWER(name) = LOWER(?)', [$name])
-            ->whereRaw('LOWER(last_name) = LOWER(?)', [$lastName])
-            ->first();
-
-        if ($result) {
-            return $result->id;
-        }
-
-        return null;
-    }
-
     public function topPrescribedMedicines(Request $request)
     {
         $name = $request->input('name');
         $lastName = $request->input('last_name');
 
         if ($name && $lastName) {
-            $doctorId = self::getDoctorTableId($name, $lastName);
+            $doctorId = getDoctorTableId($name, $lastName);
 
             if (!$doctorId) {
                 return redirect()
@@ -473,14 +406,14 @@ class DoctorController extends Controller
             $name = $user->name;
             $lastName = $user->last_name;
         }
-        $medicines = self::executeFunctionWithCursor('SEARCH_TOP_PRESCRIBED_MEDICINES_BY_DOCTOR', [$doctorId]);
+        $medicines = executeFunctionWithCursor('SEARCH_TOP_PRESCRIBED_MEDICINES_BY_DOCTOR', [$doctorId]);
 
         return view('doctor.components.top-prescribed-medicines', compact('medicines', 'name', 'lastName'));
     }
 
     public function visitsDuration()
     {
-        $visitsData = self::executeFunctionWithCursor('CALCULATE_AVERAGE_VISIT_TIME');
+        $visitsData = executeFunctionWithCursor('CALCULATE_AVERAGE_VISIT_TIME');
         return view('doctor.components.visits-duration', compact('visitsData'));
     }
 }
