@@ -50,6 +50,14 @@
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
+                                    @if (!Auth::user()->is_doctor)
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('patient.settings') }}">
+                                                <i class="bx bxs-cog me-2"></i>
+                                                <span class="align-middle">Ustawienia</span>
+                                            </a>
+                                        </li>
+                                    @endif
                                     <li>
                                         <a class="dropdown-item" href="{{ route('logout') }}">
                                             <i class="bx bx-power-off me-2"></i>
@@ -67,6 +75,14 @@
                 <div class="content-wrapper">
                     <!-- Content -->
                     <div class="container-xxl flex-grow-1 container-p-y">
+                        <h4 class="fw-bold py-3 mb-4">
+                            @hasSection('title')
+                                <span class="text-muted fw-light">Strona główna /</span> @yield('title')
+                            @else
+                                Strona główna
+                            @endif
+                        </h4>
+
                         @yield('content')
                     </div>
                     <!-- / Content -->

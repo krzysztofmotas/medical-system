@@ -13,8 +13,8 @@
                     <div class="input-group">
                         <input type="text" name="name" class="form-control" placeholder="Nazwa leku" required
                             maxlength="100" value="{{ old('name') }}">
-                        <input type="number" name="price" class="form-control" placeholder="Cena" min="1"
-                            required value="{{ old('price') }}">
+                        <input type="number" name="price" class="form-control" placeholder="Cena" min="1" required
+                            value="{{ old('price') }}">
                         <button type="submit" class="btn btn-primary">Dodaj nowy lek</button>
                     </div>
                 </div>

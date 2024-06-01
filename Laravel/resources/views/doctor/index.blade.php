@@ -1,7 +1,5 @@
 @extends('doctor.template')
 
-@section('title', 'Strona główna')
-
 @section('component-content')
     <div class="d-flex justify-content-start">
         <div class="card h-auto w-25 mx-2">

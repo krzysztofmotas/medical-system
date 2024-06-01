@@ -10,7 +10,8 @@
             <div class="row">
                 <div class="col-auto">
                     <div class="input-group">
-                        <input type="text" name="specialization" class="form-control" placeholder="Wyszukaj po specjalizacji" value="{{ $specialization ?? '' }}">
+                        <input type="text" name="specialization" class="form-control"
+                            placeholder="Wyszukaj po specjalizacji" value="{{ $specialization ?? '' }}">
                         <button type="submit" class="btn btn-primary">Szukaj</button>
                     </div>
                 </div>

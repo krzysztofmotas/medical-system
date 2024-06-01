@@ -39,6 +39,8 @@ Route::controller(PatientController::class)
     ->group(function () {
         Route::get('/my-prescriptions', 'prescriptions')->name('patient.prescriptions');
         Route::get('/my-visits', 'visits')->name('patient.visits');
+        Route::get('/settings', 'settings')->name('patient.settings');
+        Route::put('/settings', 'updateSettings')->name('patient.settings.update');
     });
 
 Route::controller(LoginController::class)

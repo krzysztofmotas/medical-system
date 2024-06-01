@@ -33,10 +33,12 @@
                                 <td>{{ formatTimestampToDate($visit['START_DATE']) }}</td>
                                 <td>{{ formatTimestampToDate($visit['END_DATE']) }}</td>
                                 <td>
-                                    <a href="{{ route('doctor.edit.visit', $visit['VISIT_ID']) }}" class="btn btn-primary">Edycja</a>
+                                    <a href="{{ route('doctor.edit.visit', $visit['VISIT_ID']) }}"
+                                        class="btn btn-primary">Edycja</a>
                                 </td>
                                 <td>
-                                    <form action="{{ route('doctor.delete.visit', $visit['VISIT_ID']) }}" method="post" onsubmit="return confirm('Czy na pewno chcesz usunąć tę wizytę?');">
+                                    <form action="{{ route('doctor.delete.visit', $visit['VISIT_ID']) }}" method="post"
+                                        onsubmit="return confirm('Czy na pewno chcesz usunąć tę wizytę?');">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger">Usunięcie</button>
