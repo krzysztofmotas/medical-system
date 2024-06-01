@@ -71,8 +71,8 @@
         </a>
     </li>
 
-    <li class="menu-item {{ Route::current()->getName() === 'doctor.age.visits' ? 'active' : '' }}">
-        <a href="" class="menu-link text-warning">
+    <li class="menu-item {{ Route::current()->getName() === 'doctor.average.visits.by.age' ? 'active' : '' }}">
+        <a href="{{ route('doctor.average.visits.by.age') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-line-chart"></i>
             <div>Średnia liczba wizyt wg wieku</div>
         </a>
@@ -82,6 +82,13 @@
         <a href="{{ route('doctor.visits') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-calendar-check"></i>
             <div>Wizyty</div>
+        </a>
+    </li>
+
+    <li class="menu-item {{ Route::current()->getName() === 'doctor.top.diagnoses' ? 'active' : '' }}">
+        <a href="{{ route('doctor.top.diagnoses') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-bar-chart-alt"></i>
+            <div>Najczęstsze diagnozy</div>
         </a>
     </li>
 

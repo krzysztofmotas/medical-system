@@ -79,7 +79,11 @@ function executeFunctionWithCursor($procedureName, $params = [])
 
     oci_execute($stmt);
     oci_execute($cursor, OCI_DEFAULT);
-    oci_fetch_all($cursor, $results, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
+
+    $results = [];
+    while (($row = oci_fetch_assoc($cursor)) != false) {
+        $results[] = $row;
+    }
 
     oci_free_statement($stmt);
     oci_free_statement($cursor);

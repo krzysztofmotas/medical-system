@@ -30,12 +30,14 @@ Route::controller(DoctorController::class)
         Route::post('/medicines/store', 'storeMedicine')->name('doctor.medicines.store');
         Route::get('/top-prescribed-medicines', 'topPrescribedMedicines')->name('doctor.top.prescribed.medicines');
         Route::get('/visits-duration', 'visitsDuration')->name('doctor.visits.duration');
+        Route::get('/top-diagnoses', 'topDiagnoses')->name('doctor.top.diagnoses');
+        Route::get('/doctor/average-visits-by-age', 'averageVisitsByAge')->name('doctor.average.visits.by.age');
     });
 
 Route::controller(PatientController::class)
     ->group(function () {
         Route::get('/prescriptions', 'prescriptions')->name('patient.prescriptions');
-        Route::get('/visits', 'visits')->name('patient.visits');
+        //Route::get('/visits', 'visits')->name('patient.visits');
     });
 
 Route::controller(LoginController::class)

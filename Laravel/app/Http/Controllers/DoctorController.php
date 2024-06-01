@@ -416,4 +416,20 @@ class DoctorController extends Controller
         $visitsData = executeFunctionWithCursor('CALCULATE_AVERAGE_VISIT_TIME');
         return view('doctor.components.visits-duration', compact('visitsData'));
     }
+    public function topDiagnoses(Request $request)
+    {
+        $topCount = $request->input('top_count', 10);
+        $searchTerm = $request->input('search_term', '');
+
+        $diagnoses = executeFunctionWithCursor('GENERATE_TOP_DIAGNOSIS_REPORT', [$topCount, $searchTerm]);
+
+        return view('doctor.components.top-diagnoses', compact('diagnoses', 'topCount', 'searchTerm'));
+    }
+    public function averageVisitsByAge()
+    {
+        $visitsByAge = executeFunctionWithCursor('CALCULATE_AVERAGE_VISITS_BY_AGE');
+
+        return view('doctor.components.average-visits-by-age', compact('visitsByAge'));
+    }
+
 }

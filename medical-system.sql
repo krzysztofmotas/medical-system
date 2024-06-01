@@ -20,7 +20,7 @@
 --  DDL for Sequence USERS_ID_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "MEDICAL_SYSTEM"."USERS_ID_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 201 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+   CREATE SEQUENCE  "MEDICAL_SYSTEM"."USERS_ID_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 221 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
 --------------------------------------------------------
 --  DDL for Table CACHE
 --------------------------------------------------------
@@ -427,27 +427,14 @@ SET DEFINE OFF;
 REM INSERTING into MEDICAL_SYSTEM.SESSIONS
 SET DEFINE OFF;
 Insert into MEDICAL_SYSTEM.SESSIONS (ID,USER_ID,IP_ADDRESS,LAST_ACTIVITY) values ('Cx7kjE4vQ4Rg9eYTevRdamOWAdPSaZ3ad2NrdQEW','181','127.0.0.1','1717251437');
+Insert into MEDICAL_SYSTEM.SESSIONS (ID,USER_ID,IP_ADDRESS,LAST_ACTIVITY) values ('drLQIwt7vSmhIDRF4rFZeOHzhi30hdwGNv2hGpPV','201','127.0.0.1','1717258971');
 REM INSERTING into MEDICAL_SYSTEM.USERS
 SET DEFINE OFF;
-Insert into MEDICAL_SYSTEM.USERS (ID,NAME,LAST_NAME,IS_DOCTOR,TABLE_ID) values ('181','Krzysztof','Motas','0','41');
+Insert into MEDICAL_SYSTEM.USERS (ID,NAME,LAST_NAME,IS_DOCTOR,TABLE_ID) values ('201','Dawid','Wójcik','1','1');
 REM INSERTING into MEDICAL_SYSTEM.VISITS
 SET DEFINE OFF;
 Insert into MEDICAL_SYSTEM.VISITS (ID,PATIENT_ID,DOCTOR_ID,REASON,START_DATE,END_DATE) values ('81','8','1','złamana noga',to_timestamp('24/06/01 10:40:31,000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('24/06/01 12:41:10,000000000','RR/MM/DD HH24:MI:SSXFF'));
 Insert into MEDICAL_SYSTEM.VISITS (ID,PATIENT_ID,DOCTOR_ID,REASON,START_DATE,END_DATE) values ('41','1','1','Katarek',to_timestamp('24/05/31 22:33:24,000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('24/05/31 23:40:00,000000000','RR/MM/DD HH24:MI:SSXFF'));
---------------------------------------------------------
---  DDL for Index CACHE_KEY_PK
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "MEDICAL_SYSTEM"."CACHE_KEY_PK" ON "MEDICAL_SYSTEM"."CACHE" ("KEY") 
-  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS" ;
---------------------------------------------------------
---  DDL for Index CACHE_LOCKS_KEY_PK
---------------------------------------------------------
-
-  CREATE UNIQUE INDEX "MEDICAL_SYSTEM"."CACHE_LOCKS_KEY_PK" ON "MEDICAL_SYSTEM"."CACHE_LOCKS" ("KEY") 
-  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index FAILED_JOBS_ID_PK
 --------------------------------------------------------
@@ -514,6 +501,20 @@ Insert into MEDICAL_SYSTEM.VISITS (ID,PATIENT_ID,DOCTOR_ID,REASON,START_DATE,END
   BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "USERS" ;
 --------------------------------------------------------
+--  DDL for Index CACHE_KEY_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MEDICAL_SYSTEM"."CACHE_KEY_PK" ON "MEDICAL_SYSTEM"."CACHE" ("KEY") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index CACHE_LOCKS_KEY_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MEDICAL_SYSTEM"."CACHE_LOCKS_KEY_PK" ON "MEDICAL_SYSTEM"."CACHE_LOCKS" ("KEY") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
 --  DDL for Index JOBS_QUEUE_INDEX
 --------------------------------------------------------
 
@@ -552,6 +553,7 @@ Insert into MEDICAL_SYSTEM.VISITS (ID,PATIENT_ID,DOCTOR_ID,REASON,START_DATE,END
                 select failed_jobs_id_seq.nextval into :new.ID from dual;
             end if;
             end;
+
 /
 ALTER TRIGGER "MEDICAL_SYSTEM"."FAILED_JOBS_ID_TRG" ENABLE;
 --------------------------------------------------------
@@ -566,6 +568,7 @@ ALTER TRIGGER "MEDICAL_SYSTEM"."FAILED_JOBS_ID_TRG" ENABLE;
                 select jobs_id_seq.nextval into :new.ID from dual;
             end if;
             end;
+
 /
 ALTER TRIGGER "MEDICAL_SYSTEM"."JOBS_ID_TRG" ENABLE;
 --------------------------------------------------------
@@ -580,6 +583,7 @@ ALTER TRIGGER "MEDICAL_SYSTEM"."JOBS_ID_TRG" ENABLE;
                 select migrations_id_seq.nextval into :new.ID from dual;
             end if;
             end;
+
 /
 ALTER TRIGGER "MEDICAL_SYSTEM"."MIGRATIONS_ID_TRG" ENABLE;
 --------------------------------------------------------
@@ -594,6 +598,7 @@ ALTER TRIGGER "MEDICAL_SYSTEM"."MIGRATIONS_ID_TRG" ENABLE;
                 select users_id_seq.nextval into :new.ID from dual;
             end if;
             end;
+
 /
 ALTER TRIGGER "MEDICAL_SYSTEM"."USERS_ID_TRG" ENABLE;
 --------------------------------------------------------
@@ -619,6 +624,7 @@ EXCEPTION
 END;
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure ADD_MEDICINE
@@ -640,6 +646,7 @@ EXCEPTION
         ROLLBACK;
         RAISE;
 END;
+
 
 /
 --------------------------------------------------------
@@ -666,6 +673,7 @@ EXCEPTION
         RAISE;
 END;
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure ADD_PRESCRIPTION
@@ -683,17 +691,17 @@ AS
 BEGIN
     -- Debug: wyświetlenie rozpoczęcia procedury
     DBMS_OUTPUT.PUT_LINE('Rozpoczęcie procedury ADD_PRESCRIPTION');
-    
+
     -- Pobierz ID pacjenta na podstawie ID wizyty
     SELECT PATIENT_ID INTO V_PATIENT_ID FROM VISITS WHERE ID = P_VISIT_ID;
-    
+
     -- Debug: wyświetlenie ID pacjenta
     DBMS_OUTPUT.PUT_LINE('ID pacjenta: ' || V_PATIENT_ID);
 
     LOOP
         -- Wygeneruj kod
         V_CODE := LPAD(TRUNC(DBMS_RANDOM.VALUE(0, 9999)), 4, '0');
-        
+
         -- Debug: wyświetlenie wygenerowanego kodu
         DBMS_OUTPUT.PUT_LINE('Wygenerowany kod: ' || V_CODE);
 
@@ -703,7 +711,7 @@ BEGIN
         FROM PRESCRIPTIONS
         WHERE CODE = V_CODE
         AND VISIT_ID IN (SELECT ID FROM VISITS WHERE PATIENT_ID = V_PATIENT_ID);
-        
+
         -- Debug: wyświetlenie wyniku sprawdzania unikalności kodu
         DBMS_OUTPUT.PUT_LINE('Liczba istniejących kodów dla pacjenta: ' || V_COUNT);
 
@@ -714,23 +722,24 @@ BEGIN
     -- Wstaw nowy rekord do tabeli PRESCRIPTIONS
     INSERT INTO PRESCRIPTIONS (VISIT_ID, EXPIRATION_DATE, CODE)
     VALUES (P_VISIT_ID, P_EXPIRATION_DATE, V_CODE);
-    
+
     -- Debug: wyświetlenie informacji o wstawieniu rekordu
     DBMS_OUTPUT.PUT_LINE('Wstawiono nowy rekord do tabeli PRESCRIPTIONS z kodem: ' || V_CODE);
 
     COMMIT;
-    
+
     -- Debug: wyświetlenie zakończenia procedury
     DBMS_OUTPUT.PUT_LINE('Zakończenie procedury ADD_PRESCRIPTION');
 EXCEPTION
     WHEN OTHERS THEN
         ROLLBACK;
-        
+
         -- Debug: wyświetlenie komunikatu o błędzie
         DBMS_OUTPUT.PUT_LINE('Błąd w procedurze ADD_PRESCRIPTION: ' || SQLERRM);
-        
+
         RAISE;
 END ADD_PRESCRIPTION;
+
 
 /
 --------------------------------------------------------
@@ -754,6 +763,7 @@ EXCEPTION
         ROLLBACK;
         RAISE;
 END;
+
 
 
 /
@@ -781,6 +791,7 @@ EXCEPTION
 END;
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure ADD_VISIT
@@ -805,6 +816,7 @@ EXCEPTION
         RAISE;
 END;
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure DELETE_DOCUMENTATION
@@ -818,6 +830,7 @@ AS
 BEGIN
     DELETE FROM DOCUMENTATIONS WHERE ID = P_ID;
 END DELETE_DOCUMENTATION;
+
 
 
 /
@@ -835,6 +848,7 @@ BEGIN
 END DELETE_PATIENT;
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure DELETE_PRESCRIPTION
@@ -850,6 +864,7 @@ BEGIN
 END DELETE_PRESCRIPTION;
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure DELETE_PRESCRIPTION_MEDICINE
@@ -863,6 +878,7 @@ AS
 BEGIN
     DELETE FROM PRESCRIPTION_MEDICINES WHERE ID = P_ID;
 END DELETE_PRESCRIPTION_MEDICINE;
+
 
 
 /
@@ -883,6 +899,7 @@ EXCEPTION
         ROLLBACK;
 END DELETE_PRESCRIPTION_MEDICINE_BY_PRESCRIPTION_ID;
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure DELETE_ROOM
@@ -898,6 +915,7 @@ BEGIN
 END DELETE_ROOM;
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure DELETE_VISIT
@@ -911,6 +929,7 @@ AS
 BEGIN
     DELETE FROM VISITS WHERE ID = P_ID;
 END DELETE_VISIT;
+
 
 /
 --------------------------------------------------------
@@ -933,16 +952,16 @@ BEGIN
             V_DOCUMENTATION_ID := NULL;
             DBMS_OUTPUT.PUT_LINE('Nie znaleziono dokumentacji medycznej dla tej wizyty.');
     END;
-    
+
     -- Jeśli dokumentacja medyczna istnieje, usuwamy ją
     IF V_DOCUMENTATION_ID IS NOT NULL THEN
         -- Usuwanie dokumentacji medycznej
         DELETE_DOCUMENTATION(V_DOCUMENTATION_ID);
-        
+
         -- Debug: Wyświetlenie informacji o usunięciu dokumentacji medycznej
         DBMS_OUTPUT.PUT_LINE('Dokumentacja medyczna została usunięta.');
     END IF;
-    
+
     BEGIN
         SELECT ID INTO V_PRESCRIPTION_ID FROM PRESCRIPTIONS WHERE VISIT_ID = P_VISIT_ID;
     EXCEPTION
@@ -950,25 +969,25 @@ BEGIN
             V_PRESCRIPTION_ID := NULL;
             DBMS_OUTPUT.PUT_LINE('Nie znaleziono recepty dla tej wizyty.');
     END;
-    
+
     -- Jeśli recepta istnieje, usuwamy leki przypisane do niej oraz samą receptę
     IF V_PRESCRIPTION_ID IS NOT NULL THEN
         -- Usuwanie leków przypisanych do recepty
         DELETE_PRESCRIPTION_MEDICINE_BY_PRESCRIPTION_ID(V_PRESCRIPTION_ID);
-        
+
         -- Debug: Wyświetlenie informacji o usunięciu leków
         DBMS_OUTPUT.PUT_LINE('Leki przypisane do recepty zostały usunięte.');
-    
+
         -- Usuwanie recepty
         DELETE_PRESCRIPTION(V_PRESCRIPTION_ID);
-        
+
         -- Debug: Wyświetlenie informacji o usunięciu recepty
         DBMS_OUTPUT.PUT_LINE('Recepta została usunięta.');
     END IF;
 
     -- Usuwanie wizyty
     DELETE_VISIT(P_VISIT_ID);
-    
+
     -- Debug: Wyświetlenie informacji o usunięciu wizyty
     DBMS_OUTPUT.PUT_LINE('Wizyta została usunięta.');
 
@@ -984,6 +1003,7 @@ EXCEPTION
         -- Debug: Wyświetlenie informacji o błędzie
         DBMS_OUTPUT.PUT_LINE('Wystąpił błąd: ' || SQLERRM);
 END DELETE_VISIT_AND_ASSOCIATED_DATA;
+
 
 /
 --------------------------------------------------------
@@ -1002,6 +1022,7 @@ BEGIN
     SET DIAGNOSIS = P_DIAGNOSIS, TREATMENT_METHOD = P_TREATMENT_METHOD
     WHERE VISIT_ID = P_VISIT_ID;
 END UPDATE_DOCUMENTATION;
+
 
 /
 --------------------------------------------------------
@@ -1025,6 +1046,7 @@ BEGIN
 END UPDATE_PATIENT;
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure UPDATE_PRESCRIPTION
@@ -1041,6 +1063,7 @@ BEGIN
     SET EXPIRATION_DATE = P_EXPIRATION_DATE
     WHERE ID = P_ID;
 END UPDATE_PRESCRIPTION;
+
 
 /
 --------------------------------------------------------
@@ -1067,6 +1090,7 @@ EXCEPTION
         RAISE;
 END UPDATE_PRESCRIPTION_MEDICINE;
 
+
 /
 --------------------------------------------------------
 --  DDL for Procedure UPDATE_ROOM
@@ -1087,6 +1111,7 @@ BEGIN
     SET NAME = P_NAME, WING = P_WING, ROOM_FLOOR = P_FLOOR, DEPARTMENT = P_DEPARTMENT, SUPERVISING_DOCTOR_ID = P_SUPERVISING_DOCTOR_ID
     WHERE ID = P_ID;
 END UPDATE_ROOM;
+
 
 
 /
@@ -1116,6 +1141,7 @@ EXCEPTION
         RAISE;
 END UPDATE_VISIT;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function CALCULATE_AVERAGE_MEDICINE_PRICE
@@ -1129,6 +1155,33 @@ BEGIN
     SELECT AVG(PRICE) INTO AVERAGE_PRICE FROM MEDICINES;
     RETURN AVERAGE_PRICE;
 END CALCULATE_AVERAGE_MEDICINE_PRICE;
+
+
+/
+--------------------------------------------------------
+--  DDL for Function CALCULATE_AVERAGE_VISITS_BY_AGE
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE FUNCTION "MEDICAL_SYSTEM"."CALCULATE_AVERAGE_VISITS_BY_AGE" 
+RETURN SYS_REFCURSOR
+AS
+    visits_by_age_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN visits_by_age_cursor FOR
+        SELECT 
+            TRUNC(MONTHS_BETWEEN(SYSDATE, P.DATE_OF_BIRTH) / 12) AS AGE,
+            COUNT(V.ID) AS VISITS_COUNT,
+            COUNT(V.ID) / COUNT(DISTINCT P.ID) AS AVERAGE_VISITS
+        FROM 
+            VISITS V
+        JOIN 
+            PATIENTS P ON V.PATIENT_ID = P.ID
+        GROUP BY 
+            TRUNC(MONTHS_BETWEEN(SYSDATE, P.DATE_OF_BIRTH) / 12)
+        ORDER BY 
+            AGE;
+    RETURN visits_by_age_cursor;
+END CALCULATE_AVERAGE_VISITS_BY_AGE;
 
 /
 --------------------------------------------------------
@@ -1152,6 +1205,7 @@ BEGIN
     RETURN p_result;
 END;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GENERATE_DOCTOR_PATIENT_COUNT_REPORT
@@ -1171,13 +1225,15 @@ BEGIN
     RETURN doctor_patient_count_cursor;
 END GENERATE_DOCTOR_PATIENT_COUNT_REPORT;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GENERATE_TOP_DIAGNOSIS_REPORT
 --------------------------------------------------------
 
   CREATE OR REPLACE EDITIONABLE FUNCTION "MEDICAL_SYSTEM"."GENERATE_TOP_DIAGNOSIS_REPORT" (
-    P_TOP_COUNT IN NUMBER
+    P_TOP_COUNT IN NUMBER,
+    P_DIAGNOSIS_FILTER IN VARCHAR2
 )
 RETURN SYS_REFCURSOR
 AS
@@ -1186,12 +1242,12 @@ BEGIN
     OPEN top_diagnosis_cursor FOR
         SELECT DIAGNOSIS, COUNT(*) AS DIAGNOSIS_COUNT
         FROM DOCUMENTATIONS
+        WHERE UPPER(DIAGNOSIS) LIKE '%' || UPPER(P_DIAGNOSIS_FILTER) || '%'
         GROUP BY DIAGNOSIS
         ORDER BY DIAGNOSIS_COUNT DESC
         FETCH FIRST P_TOP_COUNT ROWS ONLY;
     RETURN top_diagnosis_cursor;
 END GENERATE_TOP_DIAGNOSIS_REPORT;
-
 
 /
 --------------------------------------------------------
@@ -1212,6 +1268,7 @@ BEGIN
     RETURN visit_count_by_specialization_cursor;
 END GENERATE_VISIT_COUNT_BY_SPECIALIZATION_REPORT;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_ALL_DOCTORS
@@ -1226,6 +1283,7 @@ BEGIN
         SELECT * FROM doctors;
     RETURN doctors_cursor;
 END GET_ALL_DOCTORS;
+
 
 
 /
@@ -1243,6 +1301,7 @@ BEGIN
     RETURN medicines_cursor;
 END GET_ALL_MEDICINES;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_ALL_PATIENTS
@@ -1257,6 +1316,7 @@ BEGIN
         SELECT * FROM PATIENTS;
     RETURN patients_cursor;
 END GET_ALL_PATIENTS;
+
 
 
 /
@@ -1275,6 +1335,7 @@ BEGIN
 END GET_ALL_PRESCRIPTIONS;
 
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_ALL_ROOMS
@@ -1289,6 +1350,7 @@ BEGIN
         SELECT * FROM ROOMS;
     RETURN rooms_cursor;
 END GET_ALL_ROOMS;
+
 
 
 /
@@ -1322,6 +1384,7 @@ BEGIN
     RETURN visits_cursor;
 END GET_ALL_VISITS;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_DOCTOR_VISITS
@@ -1346,6 +1409,7 @@ BEGIN
         ORDER BY v.START_DATE DESC;
     RETURN visit_cursor;
 END GET_DOCTOR_VISITS;
+
 
 /
 --------------------------------------------------------
@@ -1373,6 +1437,7 @@ EXCEPTION
         RETURN NULL;
 END;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function GET_PRESCRIPTION_MEDICINES
@@ -1392,6 +1457,7 @@ BEGIN
         WHERE PM.PRESCRIPTION_ID = P_PRESCRIPTION_ID;
     RETURN prescription_medicines_cursor;
 END GET_PRESCRIPTION_MEDICINES;
+
 
 
 /
@@ -1421,6 +1487,7 @@ EXCEPTION
         RETURN 0;
 END LOGIN_DOCTOR;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function LOGIN_PATIENT
@@ -1448,6 +1515,7 @@ EXCEPTION
         RETURN 0;
 END LOGIN_PATIENT;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function SEARCH_DOCTORS_BY_SPECIALIZATION
@@ -1465,6 +1533,7 @@ BEGIN
     RETURN doctors_by_specialization_cursor;
 END SEARCH_DOCTORS_BY_SPECIALIZATION;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function SEARCH_EXPENSIVE_MEDICINES
@@ -1478,6 +1547,7 @@ BEGIN
     OPEN CUR_MEDICINES FOR SELECT * FROM MEDICINES WHERE PRICE > (SELECT AVG(PRICE) FROM MEDICINES);
     RETURN CUR_MEDICINES;
 END SEARCH_EXPENSIVE_MEDICINES;
+
 
 /
 --------------------------------------------------------
@@ -1498,6 +1568,7 @@ BEGIN
         WHERE TRUNC(V.START_DATE) = TRUNC(P_VISIT_DATE);
     RETURN patients_by_visit_date_cursor;
 END SEARCH_PATIENTS_BY_VISIT_DATE;
+
 
 
 /
@@ -1527,6 +1598,7 @@ BEGIN
     RETURN top_prescribed_medicines_cursor;
 END SEARCH_TOP_PRESCRIBED_MEDICINES_BY_DOCTOR;
 
+
 /
 --------------------------------------------------------
 --  DDL for Function SEARCH_VISITS_BY_PATIENT_LAST_NAME
@@ -1548,7 +1620,36 @@ BEGIN
     RETURN visits_by_patient_last_name_cursor;
 END SEARCH_VISITS_BY_PATIENT_LAST_NAME;
 
+
 /
+--------------------------------------------------------
+--  Constraints for Table ROOMS
+--------------------------------------------------------
+
+  ALTER TABLE "MEDICAL_SYSTEM"."ROOMS" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."ROOMS" ADD PRIMARY KEY ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table FAILED_JOBS
+--------------------------------------------------------
+
+  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("UUID" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("CONNECTION" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("QUEUE" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("PAYLOAD" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("EXCEPTION" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("FAILED_AT" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" ADD CONSTRAINT "FAILED_JOBS_ID_PK" PRIMARY KEY ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" ADD CONSTRAINT "FAILED_JOBS_UUID_UK" UNIQUE ("UUID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  TABLESPACE "USERS"  ENABLE;
 --------------------------------------------------------
 --  Constraints for Table JOB_BATCHES
 --------------------------------------------------------
@@ -1564,22 +1665,22 @@ END SEARCH_VISITS_BY_PATIENT_LAST_NAME;
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   TABLESPACE "USERS"  ENABLE;
 --------------------------------------------------------
---  Constraints for Table PRESCRIPTIONS
+--  Constraints for Table PATIENTS
 --------------------------------------------------------
 
-  ALTER TABLE "MEDICAL_SYSTEM"."PRESCRIPTIONS" MODIFY ("ID" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."PRESCRIPTIONS" ADD PRIMARY KEY ("ID")
+  ALTER TABLE "MEDICAL_SYSTEM"."PATIENTS" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."PATIENTS" ADD PRIMARY KEY ("ID")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
   BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "USERS"  ENABLE;
 --------------------------------------------------------
---  Constraints for Table PATIENTS
+--  Constraints for Table VISITS
 --------------------------------------------------------
 
-  ALTER TABLE "MEDICAL_SYSTEM"."PATIENTS" MODIFY ("ID" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."PATIENTS" ADD PRIMARY KEY ("ID")
+  ALTER TABLE "MEDICAL_SYSTEM"."VISITS" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."VISITS" ADD PRIMARY KEY ("ID")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
@@ -1608,77 +1709,11 @@ END SEARCH_VISITS_BY_PATIENT_LAST_NAME;
   BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "USERS"  ENABLE;
 --------------------------------------------------------
---  Constraints for Table USERS
---------------------------------------------------------
-
-  ALTER TABLE "MEDICAL_SYSTEM"."USERS" MODIFY ("ID" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."USERS" MODIFY ("NAME" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."USERS" MODIFY ("LAST_NAME" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."USERS" MODIFY ("IS_DOCTOR" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."USERS" MODIFY ("TABLE_ID" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."USERS" ADD CONSTRAINT "USERS_ID_PK" PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
-  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
-  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
-  TABLESPACE "USERS"  ENABLE;
---------------------------------------------------------
---  Constraints for Table FAILED_JOBS
---------------------------------------------------------
-
-  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("ID" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("UUID" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("CONNECTION" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("QUEUE" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("PAYLOAD" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("EXCEPTION" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" MODIFY ("FAILED_AT" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" ADD CONSTRAINT "FAILED_JOBS_ID_PK" PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS"  ENABLE;
-  ALTER TABLE "MEDICAL_SYSTEM"."FAILED_JOBS" ADD CONSTRAINT "FAILED_JOBS_UUID_UK" UNIQUE ("UUID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS"  ENABLE;
---------------------------------------------------------
---  Constraints for Table JOBS
---------------------------------------------------------
-
-  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" MODIFY ("ID" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" MODIFY ("QUEUE" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" MODIFY ("PAYLOAD" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" MODIFY ("ATTEMPTS" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" MODIFY ("AVAILABLE_AT" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" MODIFY ("CREATED_AT" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" ADD CONSTRAINT "JOBS_ID_PK" PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS"  ENABLE;
---------------------------------------------------------
---  Constraints for Table CACHE_LOCKS
---------------------------------------------------------
-
-  ALTER TABLE "MEDICAL_SYSTEM"."CACHE_LOCKS" MODIFY ("KEY" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."CACHE_LOCKS" MODIFY ("OWNER" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."CACHE_LOCKS" MODIFY ("EXPIRATION" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."CACHE_LOCKS" ADD CONSTRAINT "CACHE_LOCKS_KEY_PK" PRIMARY KEY ("KEY")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS"  ENABLE;
---------------------------------------------------------
 --  Constraints for Table DOCTORS
 --------------------------------------------------------
 
   ALTER TABLE "MEDICAL_SYSTEM"."DOCTORS" MODIFY ("ID" NOT NULL ENABLE);
   ALTER TABLE "MEDICAL_SYSTEM"."DOCTORS" ADD PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
-  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
-  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
-  TABLESPACE "USERS"  ENABLE;
---------------------------------------------------------
---  Constraints for Table VISITS
---------------------------------------------------------
-
-  ALTER TABLE "MEDICAL_SYSTEM"."VISITS" MODIFY ("ID" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."VISITS" ADD PRIMARY KEY ("ID")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
@@ -1694,11 +1729,85 @@ END SEARCH_VISITS_BY_PATIENT_LAST_NAME;
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   TABLESPACE "USERS"  ENABLE;
 --------------------------------------------------------
+--  Constraints for Table MIGRATIONS
+--------------------------------------------------------
+
+  ALTER TABLE "MEDICAL_SYSTEM"."MIGRATIONS" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."MIGRATIONS" MODIFY ("MIGRATION" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."MIGRATIONS" MODIFY ("BATCH" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."MIGRATIONS" ADD CONSTRAINT "MIGRATIONS_ID_PK" PRIMARY KEY ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table USERS
+--------------------------------------------------------
+
+  ALTER TABLE "MEDICAL_SYSTEM"."USERS" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."USERS" MODIFY ("NAME" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."USERS" MODIFY ("LAST_NAME" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."USERS" MODIFY ("IS_DOCTOR" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."USERS" MODIFY ("TABLE_ID" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."USERS" ADD CONSTRAINT "USERS_ID_PK" PRIMARY KEY ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table PRESCRIPTIONS
+--------------------------------------------------------
+
+  ALTER TABLE "MEDICAL_SYSTEM"."PRESCRIPTIONS" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."PRESCRIPTIONS" ADD PRIMARY KEY ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table CACHE_LOCKS
+--------------------------------------------------------
+
+  ALTER TABLE "MEDICAL_SYSTEM"."CACHE_LOCKS" MODIFY ("KEY" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."CACHE_LOCKS" MODIFY ("OWNER" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."CACHE_LOCKS" MODIFY ("EXPIRATION" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."CACHE_LOCKS" ADD CONSTRAINT "CACHE_LOCKS_KEY_PK" PRIMARY KEY ("KEY")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
 --  Constraints for Table MEDICINES
 --------------------------------------------------------
 
   ALTER TABLE "MEDICAL_SYSTEM"."MEDICINES" MODIFY ("ID" NOT NULL ENABLE);
   ALTER TABLE "MEDICAL_SYSTEM"."MEDICINES" ADD PRIMARY KEY ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table JOBS
+--------------------------------------------------------
+
+  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" MODIFY ("QUEUE" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" MODIFY ("PAYLOAD" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" MODIFY ("ATTEMPTS" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" MODIFY ("AVAILABLE_AT" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" MODIFY ("CREATED_AT" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."JOBS" ADD CONSTRAINT "JOBS_ID_PK" PRIMARY KEY ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table SESSIONS
+--------------------------------------------------------
+
+  ALTER TABLE "MEDICAL_SYSTEM"."SESSIONS" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."SESSIONS" MODIFY ("LAST_ACTIVITY" NOT NULL ENABLE);
+  ALTER TABLE "MEDICAL_SYSTEM"."SESSIONS" ADD CONSTRAINT "SESSIONS_ID_PK" PRIMARY KEY ("ID")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
@@ -1713,43 +1822,6 @@ END SEARCH_VISITS_BY_PATIENT_LAST_NAME;
   ALTER TABLE "MEDICAL_SYSTEM"."CACHE" MODIFY ("EXPIRATION" NOT NULL ENABLE);
   ALTER TABLE "MEDICAL_SYSTEM"."CACHE" ADD CONSTRAINT "CACHE_KEY_PK" PRIMARY KEY ("KEY")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  TABLESPACE "USERS"  ENABLE;
---------------------------------------------------------
---  Constraints for Table SESSIONS
---------------------------------------------------------
-
-  ALTER TABLE "MEDICAL_SYSTEM"."SESSIONS" MODIFY ("ID" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."SESSIONS" MODIFY ("PAYLOAD" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."SESSIONS" MODIFY ("LAST_ACTIVITY" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."SESSIONS" ADD CONSTRAINT "SESSIONS_ID_PK" PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
-  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
-  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
-  TABLESPACE "USERS"  ENABLE;
---------------------------------------------------------
---  Constraints for Table MIGRATIONS
---------------------------------------------------------
-
-  ALTER TABLE "MEDICAL_SYSTEM"."MIGRATIONS" MODIFY ("ID" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."MIGRATIONS" MODIFY ("MIGRATION" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."MIGRATIONS" MODIFY ("BATCH" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."MIGRATIONS" ADD CONSTRAINT "MIGRATIONS_ID_PK" PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
-  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
-  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
-  TABLESPACE "USERS"  ENABLE;
---------------------------------------------------------
---  Constraints for Table ROOMS
---------------------------------------------------------
-
-  ALTER TABLE "MEDICAL_SYSTEM"."ROOMS" MODIFY ("ID" NOT NULL ENABLE);
-  ALTER TABLE "MEDICAL_SYSTEM"."ROOMS" ADD PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
-  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
-  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "USERS"  ENABLE;
 --------------------------------------------------------
 --  Ref Constraints for Table DOCUMENTATIONS
