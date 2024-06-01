@@ -14,3 +14,7 @@ function formatTimestampToDate($timestamp)
 
     return $formattedDate;
 }
+
+function formatSecondsToTime($seconds) {
+    return Carbon::createFromTimestamp($seconds)->toTimeString();
+}

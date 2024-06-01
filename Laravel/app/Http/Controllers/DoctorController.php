@@ -477,4 +477,10 @@ class DoctorController extends Controller
 
         return view('doctor.components.top-prescribed-medicines', compact('medicines', 'name', 'lastName'));
     }
+
+    public function visitsDuration()
+    {
+        $visitsData = self::executeFunctionWithCursor('CALCULATE_AVERAGE_VISIT_TIME');
+        return view('doctor.components.visits-duration', compact('visitsData'));
+    }
 }

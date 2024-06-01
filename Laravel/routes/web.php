@@ -29,6 +29,7 @@ Route::controller(DoctorController::class)
         Route::get('/medicines', 'medicines')->name('doctor.medicines');
         Route::post('/medicines/store', 'storeMedicine')->name('doctor.medicines.store');
         Route::get('/top-prescribed-medicines', 'topPrescribedMedicines')->name('doctor.top.prescribed.medicines');
+        Route::get('/visits-duration', 'visitsDuration')->name('doctor.visits.duration');
     });
 
 Route::controller(PatientController::class)

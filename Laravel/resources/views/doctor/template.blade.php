@@ -57,8 +57,8 @@
         </a>
     </li>
 
-    <li class="menu-item {{ Route::current()->getName() === 'data.visit-duration' ? 'active' : '' }}">
-        <a href="" class="menu-link">
+    <li class="menu-item {{ Route::current()->getName() === 'doctor.visits.duration' ? 'active' : '' }}">
+        <a href="{{ route('doctor.visits.duration') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-time-five"></i>
             <div>Średni czas trwania wizyty</div>
         </a>
