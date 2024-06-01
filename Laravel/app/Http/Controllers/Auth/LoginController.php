@@ -37,7 +37,7 @@ class LoginController extends Controller
         $last_name = $request->input('last_name');
         $is_doctor = (boolean) $request->has('is_doctor');
 
-        $isLoggedIn = $is_doctor ? self::loginDoctor($name, $last_name) : self::loginPatient($name, $last_name);
+        $isLoggedIn = $is_doctor ? self::doctorExists($name, $last_name) : self::patientExists($name, $last_name);
 
         if ($isLoggedIn) {
             User::truncate();
@@ -76,7 +76,7 @@ class LoginController extends Controller
         return null;
     }
 
-    private function loginDoctor($name, $last_name)
+    public static function doctorExists($name, $last_name)
     {
         $query = "SELECT LOGIN_DOCTOR(:name, :last_name) AS result FROM DUAL";
 
@@ -90,7 +90,7 @@ class LoginController extends Controller
         return $result->result;
     }
 
-    private function loginPatient($name, $last_name)
+    public static function patientExists($name, $last_name)
     {
         $query = "SELECT LOGIN_PATIENT(:name, :last_name) AS result FROM DUAL";
 
@@ -127,7 +127,7 @@ class LoginController extends Controller
         $name = $request->input('name');
         $last_name = $request->input('last_name');
 
-        $exists = self::loginPatient($name, $last_name); // nie loguje wprost tylko sprawdza, czy dany pacjent istnieje
+        $exists = self::patientExists($name, $last_name);
 
         if (!$exists) {
             $result = DB::statement("CALL ADD_PATIENT(?, ?, ?, ?, ?)", [

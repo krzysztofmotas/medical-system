@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -14,7 +15,7 @@ class DoctorController extends Controller
 {
     public function expensiveMedicines()
     {
-        $medicines = self::executeProcedureWithCursor('SEARCH_EXPENSIVE_MEDICINES');
+        $medicines = self::executeFunctionWithCursor('SEARCH_EXPENSIVE_MEDICINES');
         return view('doctor.components.expensive-medicines', compact('medicines'));
     }
 
@@ -23,9 +24,9 @@ class DoctorController extends Controller
         $specialization = $request->input('specialization');
 
         if ($specialization) {
-            $doctors = self::executeProcedureWithCursor('SEARCH_DOCTORS_BY_SPECIALIZATION', [$specialization]);
+            $doctors = self::executeFunctionWithCursor('SEARCH_DOCTORS_BY_SPECIALIZATION', [$specialization]);
         } else {
-            $doctors = self::executeProcedureWithCursor('GET_ALL_DOCTORS');
+            $doctors = self::executeFunctionWithCursor('GET_ALL_DOCTORS');
         }
 
         return view('doctor.components.doctors', compact('doctors'));
@@ -33,13 +34,13 @@ class DoctorController extends Controller
 
     public function doctorPatientCountReport()
     {
-        $report = self::executeProcedureWithCursor('GENERATE_DOCTOR_PATIENT_COUNT_REPORT');
+        $report = self::executeFunctionWithCursor('GENERATE_DOCTOR_PATIENT_COUNT_REPORT');
         return view('doctor.components.doctor-patient-count-report', compact('report'));
     }
 
     public function allPatients()
     {
-        $patients = self::executeProcedureWithCursor('GET_ALL_PATIENTS');
+        $patients = self::executeFunctionWithCursor('GET_ALL_PATIENTS');
         return view('doctor.components.all-patients', compact('patients'));
     }
 
@@ -48,15 +49,15 @@ class DoctorController extends Controller
         $lastName = $request->input('last_name');
 
         if ($lastName) {
-            $visits = self::executeProcedureWithCursor('SEARCH_VISITS_BY_PATIENT_LAST_NAME', [$lastName]);
+            $visits = self::executeFunctionWithCursor('SEARCH_VISITS_BY_PATIENT_LAST_NAME', [$lastName]);
         } else {
-            $visits = self::executeProcedureWithCursor('GET_ALL_VISITS');
+            $visits = self::executeFunctionWithCursor('GET_ALL_VISITS');
         }
 
         return view('doctor.components.visits', compact('visits', 'lastName'));
     }
 
-    private function executeProcedureWithCursor($procedureName, $params = [])
+    private function executeFunctionWithCursor($procedureName, $params = [])
     {
         $conn = DB::getPdo()->getResource();
         $sql = "BEGIN :result := $procedureName(";
@@ -89,7 +90,7 @@ class DoctorController extends Controller
 
     public function createVisit()
     {
-        $medicines = self::executeProcedureWithCursor('GET_ALL_MEDICINES');
+        $medicines = self::executeFunctionWithCursor('GET_ALL_MEDICINES');
         $currentDateTime = self::getDateTime();
 
         return view('doctor.components.create-visit', compact(
@@ -205,14 +206,14 @@ class DoctorController extends Controller
 
     public function specializationPopularity()
     {
-        $popularityData = self::executeProcedureWithCursor('GENERATE_VISIT_COUNT_BY_SPECIALIZATION_REPORT');
+        $popularityData = self::executeFunctionWithCursor('GENERATE_VISIT_COUNT_BY_SPECIALIZATION_REPORT');
         return view('doctor.components.specialization-popularity', compact('popularityData'));
     }
 
     public function manageVisits()
     {
         $user = Auth::user();
-        $visits = self::executeProcedureWithCursor('GET_DOCTOR_VISITS', [$user->table_id]);
+        $visits = self::executeFunctionWithCursor('GET_DOCTOR_VISITS', [$user->table_id]);
 
         return view('doctor.components.manage-visits', compact('visits'));
     }
@@ -281,7 +282,7 @@ class DoctorController extends Controller
             $medicinesData = json_decode(json_encode($medicinesData), true);
         }
 
-        $medicines = self::executeProcedureWithCursor('GET_ALL_MEDICINES');
+        $medicines = self::executeFunctionWithCursor('GET_ALL_MEDICINES');
 
         return view('doctor.components.edit-visit', compact(
             'visit',
@@ -408,7 +409,7 @@ class DoctorController extends Controller
 
     public function medicines()
     {
-        $medicines = self::executeProcedureWithCursor('GET_ALL_MEDICINES');
+        $medicines = self::executeFunctionWithCursor('GET_ALL_MEDICINES');
         return view('doctor.components.medicines', compact('medicines'));
     }
 
@@ -435,5 +436,45 @@ class DoctorController extends Controller
 
         return to_route('doctor.medicines')
             ->with('success', 'Nowy lek o nazwie ' . $name . ' i cenie ' . $price . ' zł został pomyślnie dodany.');
+    }
+
+    private function getDoctorTableId($name, $lastName)
+    {
+        $result = DB::table('doctors')
+            ->select('id')
+            ->whereRaw('LOWER(name) = LOWER(?)', [$name])
+            ->whereRaw('LOWER(last_name) = LOWER(?)', [$lastName])
+            ->first();
+
+        if ($result) {
+            return $result->id;
+        }
+
+        return null;
+    }
+
+    public function topPrescribedMedicines(Request $request)
+    {
+        $name = $request->input('name');
+        $lastName = $request->input('last_name');
+
+        if ($name && $lastName) {
+            $doctorId = self::getDoctorTableId($name, $lastName);
+
+            if (!$doctorId) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Lekarz o takim imieniu i nazwisku nie istnieje!');
+            }
+        } else {
+            $user = Auth::user();
+            $doctorId = $user->table_id;
+
+            $name = $user->name;
+            $lastName = $user->last_name;
+        }
+        $medicines = self::executeFunctionWithCursor('SEARCH_TOP_PRESCRIBED_MEDICINES_BY_DOCTOR', [$doctorId]);
+
+        return view('doctor.components.top-prescribed-medicines', compact('medicines', 'name', 'lastName'));
     }
 }
