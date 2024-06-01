@@ -117,10 +117,10 @@
         <span class="menu-header-text">Inne</span>
     </li>
 
-    <li class="menu-item {{ Route::current()->getName() === 'patient.history' ? 'active' : '' }}">
-        <a href="" class="menu-link">
-            <i class="menu-icon tf-icons bx bx-history"></i>
-            <div>Historia pacjentów</div>
+    <li class="menu-item {{ Route::current()->getName() === 'doctor.medicines' ? 'active' : '' }}">
+        <a href="{{ route('doctor.medicines') }}" class="menu-link">
+            <i class="menu-icon tf-icons bx bxs-capsule"></i>
+            <div>Leki</div>
         </a>
     </li>
 

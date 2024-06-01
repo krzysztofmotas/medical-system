@@ -45,7 +45,7 @@
 </head>
 
 <body>
-    <div class="vstack gap-3 position-absolute bottom-0 end-0 mb-3 me-3">
+    <div class="vstack gap-3 position-fixed bottom-0 end-0 mb-3 me-3" style="z-index: 3000;">
         @include('shared.success-toast')
         @include('shared.error-toast')
     </div>

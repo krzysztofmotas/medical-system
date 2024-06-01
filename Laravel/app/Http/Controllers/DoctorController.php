@@ -405,4 +405,35 @@ class DoctorController extends Controller
             return back()->withInput()->withErrors(['error' => $e->getMessage()]);
         }
     }
+
+    public function medicines()
+    {
+        $medicines = self::executeProcedureWithCursor('GET_ALL_MEDICINES');
+        return view('doctor.components.medicines', compact('medicines'));
+    }
+
+    public function storeMedicine(Request $request)
+    {
+        $name = $request->input('name');
+
+        $result = DB::table('medicines')
+            ->whereRaw('LOWER(name) = LOWER(?)', [$name])
+            ->exists();
+
+        if ($result) {
+            return back()->withInput()->with('error', 'Lek o podanej nazwie już istnieje!');
+        }
+
+        $price = $request->input('price');
+        $medicineId = DB::table('MEDICINES')->max('ID') + 1;
+
+        DB::statement("CALL ADD_MEDICINE(?, ?, ?)", [
+            $medicineId,
+            $name,
+            $price
+        ]);
+
+        return to_route('doctor.medicines')
+            ->with('success', 'Nowy lek o nazwie ' . $name . ' i cenie ' . $price . ' zł został pomyślnie dodany.');
+    }
 }
