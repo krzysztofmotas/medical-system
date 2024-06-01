@@ -64,13 +64,6 @@
         </a>
     </li>
 
-    <li class="menu-item {{ Route::current()->getName() === 'data.patient-age' ? 'active' : '' }}">
-        <a href="" class="menu-link">
-            <i class="menu-icon tf-icons bx bx-group"></i>
-            <div>Statystyki wieku pacjentów</div>
-        </a>
-    </li>
-
     <li class="menu-item {{ Route::current()->getName() === 'doctor.specialization.popularity' ? 'active' : '' }}">
         <a href="{{ route('doctor.specialization.popularity') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-bar-chart-square"></i>
@@ -78,31 +71,10 @@
         </a>
     </li>
 
-    <li class="menu-item {{ Route::current()->getName() === 'data.visit-frequency' ? 'active' : '' }}">
-        <a href="" class="menu-link">
-            <i class="menu-icon tf-icons bx bx-calendar-check"></i>
-            <div>Częstotliwość wizyt</div>
-        </a>
-    </li>
-
-    <li class="menu-item {{ Route::current()->getName() === 'data.visit-trends' ? 'active' : '' }}">
-        <a href="" class="menu-link">
-            <i class="menu-icon tf-icons bx bx-trending-up"></i>
-            <div>Trendy wizyt</div>
-        </a>
-    </li>
-
-    <li class="menu-item {{ Route::current()->getName() === 'data.age-visits' ? 'active' : '' }}">
-        <a href="" class="menu-link">
+    <li class="menu-item {{ Route::current()->getName() === 'doctor.age.visits' ? 'active' : '' }}">
+        <a href="" class="menu-link text-warning">
             <i class="menu-icon tf-icons bx bx-line-chart"></i>
             <div>Średnia liczba wizyt wg wieku</div>
-        </a>
-    </li>
-
-    <li class="menu-item {{ Route::current()->getName() === 'data.gender-distribution' ? 'active' : '' }}">
-        <a href="" class="menu-link">
-            <i class="menu-icon tf-icons bx bx-pie-chart-alt"></i>
-            <div>Rozkład płci wg wieku</div>
         </a>
     </li>
 

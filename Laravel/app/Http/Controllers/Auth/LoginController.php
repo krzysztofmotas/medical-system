@@ -118,6 +118,7 @@ class LoginController extends Controller
             'gender' => 'required|in:Mężczyzna,Kobieta,Inna',
             'address' => 'required|string|max:100',
             'phone_number' => 'required|string|max:15',
+            'date_of_birth' => 'required|date'
         ]);
 
         if ($validator->fails()) {
@@ -130,12 +131,13 @@ class LoginController extends Controller
         $exists = self::patientExists($name, $last_name);
 
         if (!$exists) {
-            $result = DB::statement("CALL ADD_PATIENT(?, ?, ?, ?, ?)", [
+            $result = DB::statement("CALL ADD_PATIENT(?, ?, ?, ?, ?, ?)", [
                 $name,
                 $last_name,
                 $request->input('gender'),
                 $request->input('address'),
                 $request->input('phone_number'),
+                $request->input('date_of_birth')
             ]);
 
             if (!$result) {

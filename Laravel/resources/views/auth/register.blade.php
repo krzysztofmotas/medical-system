@@ -74,6 +74,14 @@
                             </div>
 
                             <div class="mb-3">
+                                <label for="date_of_birth" class="form-label">Data urodzenia</label>
+                                <input value="{{ old('date_of_birth') }}" type="date" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Podaj swoją datę urodzenia" required />
+                                @error('date_of_birth')
+                                    <div class="form-text text-warning">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
                                 <button class="btn btn-primary d-grid w-100" type="submit">Zarejestruj się</button>
                             </div>
                         </form>
