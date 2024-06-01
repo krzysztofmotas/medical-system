@@ -425,11 +425,11 @@ class DoctorController extends Controller
 
         return view('doctor.components.top-diagnoses', compact('diagnoses', 'topCount', 'searchTerm'));
     }
+
     public function averageVisitsByAge()
     {
         $visitsByAge = executeFunctionWithCursor('CALCULATE_AVERAGE_VISITS_BY_AGE');
 
         return view('doctor.components.average-visits-by-age', compact('visitsByAge'));
     }
-
 }

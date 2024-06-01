@@ -36,8 +36,8 @@ Route::controller(DoctorController::class)
 
 Route::controller(PatientController::class)
     ->group(function () {
-        Route::get('/prescriptions', 'prescriptions')->name('patient.prescriptions');
-        //Route::get('/visits', 'visits')->name('patient.visits');
+        Route::get('/my-prescriptions', 'prescriptions')->name('patient.prescriptions');
+        Route::get('/my-visits', 'visits')->name('patient.visits');
     });
 
 Route::controller(LoginController::class)
