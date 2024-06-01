@@ -35,7 +35,7 @@ class LoginController extends Controller
 
         $name = $request->input('name');
         $last_name = $request->input('last_name');
-        $is_doctor = (boolean) $request->input('is_doctor');
+        $is_doctor = (bool) $request->input('is_doctor');
 
         $isLoggedIn = false;
 
@@ -71,8 +71,8 @@ class LoginController extends Controller
     {
         $result = DB::table($user->is_doctor ? 'doctors' : 'patients')
             ->select('id')
-            ->where('name', $user->name)
-            ->where('last_name', $user->last_name)
+            ->whereRaw('LOWER(name) = LOWER(?)', [$user->name])
+            ->whereRaw('LOWER(last_name) = LOWER(?)', [$user->last_name])
             ->first();
 
         if ($result) {
@@ -108,5 +108,67 @@ class LoginController extends Controller
         $result = DB::connection()->selectOne($query, $bindings);
 
         return $result->result;
+    }
+
+    public function registerView()
+    {
+        return view('auth.register');
+    }
+
+    public function processRegister(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+
+            'gender' => 'required|in:Mężczyzna,Kobieta,Inna',
+            'address' => 'required|string|max:100',
+            'phone_number' => 'required|string|max:15',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $name = $request->input('name');
+        $last_name = $request->input('last_name');
+
+        $exists = self::loginPatient($name, $last_name); // nie loguje wprost tylko sprawdza, czy dany pacjent istnieje
+
+        if (!$exists) {
+            $result = DB::statement("CALL ADD_PATIENT(?, ?, ?, ?, ?)", [
+                $name,
+                $last_name,
+                $request->input('gender'),
+                $request->input('address'),
+                $request->input('phone_number'),
+            ]);
+
+            if (!$result) {
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('error', 'Wystąpił błąd i nie mogłeś zostać zarejestrowany.');
+            }
+
+            User::truncate();
+
+            $user = new User();
+            $user->name = $name;
+            $user->last_name = $last_name;
+            $user->is_doctor = false;
+            $user->table_id = self::getUserTableId($user);
+            $user->save();
+
+            Auth::login($user);
+
+            return to_route('dashboard.index')
+                ->with('success', 'Zostałeś pomyślnie zarejestrowany w naszej placówce!');
+        } else {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'W naszej placówce istnieje już pacjent o takim imieniu i nazwisku.');
+        }
     }
 }

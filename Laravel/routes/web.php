@@ -37,5 +37,8 @@ Route::controller(LoginController::class)
     ->group(function () {
         Route::post('/login', 'authenticate')->middleware('guest')->name('login');
         Route::get('/logout', 'logout')->middleware('auth')->name('logout');
+
+        Route::get('/register', 'registerView')->middleware('guest')->name('register');
+        Route::post('/process-register', 'processRegister')->middleware('guest')->name('process.register');
     });
 
