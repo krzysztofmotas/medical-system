@@ -355,10 +355,20 @@ class DoctorController extends Controller
         }
     }
 
+    function calculateAverageMedicinePrice()
+    {
+        $result = DB::selectOne("SELECT CALCULATE_AVERAGE_MEDICINE_PRICE() AS average_price FROM DUAL");
+        $averagePrice = $result->average_price;
+
+        return $averagePrice;
+    }
+
     public function medicines()
     {
         $medicines = executeFunctionWithCursor('GET_ALL_MEDICINES');
-        return view('doctor.components.medicines', compact('medicines'));
+        $averageMedicinePrice = self::calculateAverageMedicinePrice();
+
+        return view('doctor.components.medicines', compact('medicines', 'averageMedicinePrice'));
     }
 
     public function storeMedicine(Request $request)

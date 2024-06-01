@@ -16,21 +16,9 @@ class DashboardController extends Controller
         }
 
         if ($user->is_doctor) {
-            $averageMedicinePrice = self::calculateAverageMedicinePrice(); // TODO: przekazywane, ale nieobsługiwane w żaden sposób
-
-            return view('doctor.index', compact(
-                'averageMedicinePrice'
-            ));
+            return view('doctor.index');
         } else {
             return view('patient.index');
         }
-    }
-
-    function calculateAverageMedicinePrice()
-    {
-        $result = DB::selectOne("SELECT CALCULATE_AVERAGE_MEDICINE_PRICE() AS average_price FROM DUAL");
-        $averagePrice = $result->average_price;
-
-        return $averagePrice;
     }
 }

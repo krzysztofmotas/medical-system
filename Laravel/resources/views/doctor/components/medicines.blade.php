@@ -8,7 +8,7 @@
 
         <form action="{{ route('doctor.medicines.store') }}" method="post" class="mx-4 mb-3">
             @csrf
-            <div class="row">
+            <div class="row justify-content-between align-items-center">
                 <div class="col-auto">
                     <div class="input-group">
                         <input type="text" name="name" class="form-control" placeholder="Nazwa leku" required
@@ -17,6 +17,10 @@
                             value="{{ old('price') }}">
                         <button type="submit" class="btn btn-primary">Dodaj nowy lek</button>
                     </div>
+                </div>
+
+                <div class="col-auto">
+                    Średnia cena leku: <strong>{{ number_format($averageMedicinePrice, 2) }} zł</strong>
                 </div>
             </div>
         </form>
