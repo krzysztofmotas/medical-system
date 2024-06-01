@@ -17,7 +17,7 @@
             <div class="col-md-6">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">Dane wizyty</h5>
+                        <h5 class="card-title">Dane wizyty (ID: {{ $visit['id'] }})</h5>
                         <div class="mb-3">
                             <label for="first_name" class="form-label">Imię pacjenta</label>
                             <input type="text" class="form-control" id="first_name" name="first_name"
@@ -97,9 +97,14 @@
                         <div class="mb-3">
                             <label for="expiration_date" class="form-label">Data ważności recepty</label>
                             <input type="date" class="form-control" id="expiration_date" name="expiration_date"
-                                value="{{ old('expiration_date', $prescriptionData['expiration_date']) }}">
-                            <small class="form-text text-muted">Jeśli nie zmienisz tej daty, recepta będzie ważna przez
-                                rok.</small>
+                                value="{{ old('expiration_date', $prescriptionData['expiration_date'] ?? '') }}">
+
+                            @if (!isset($prescriptionData['expiration_date']))
+                                <small class="form-text text-muted">
+                                    Jeśli nie zmienisz tej daty, recepta będzie ważna przez rok.
+                                </small>
+                            @endif
+
                             @error('expiration_date')
                                 <div class="form-text text-warning">{{ $message }}</div>
                             @enderror
@@ -173,7 +178,8 @@
                         medicine_id: medicine.medicine_id,
                         name: medicine.name,
                         dosage: medicine.dosage,
-                        payment: medicine.payment
+                        payment: medicine.payment,
+                        deleted: false
                     });
                 });
             }
