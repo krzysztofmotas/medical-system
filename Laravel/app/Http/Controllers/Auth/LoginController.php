@@ -35,15 +35,9 @@ class LoginController extends Controller
 
         $name = $request->input('name');
         $last_name = $request->input('last_name');
-        $is_doctor = (bool) $request->input('is_doctor');
+        $is_doctor = (boolean) $request->has('is_doctor');
 
-        $isLoggedIn = false;
-
-        if ($is_doctor) {
-            $isLoggedIn = self::loginDoctor($name, $last_name);
-        } else {
-            $isLoggedIn = self::loginPatient($name, $last_name);
-        }
+        $isLoggedIn = $is_doctor ? self::loginDoctor($name, $last_name) : self::loginPatient($name, $last_name);
 
         if ($isLoggedIn) {
             User::truncate();

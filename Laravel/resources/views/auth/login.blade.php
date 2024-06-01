@@ -46,7 +46,7 @@
                             </div>
                             <div class="mb-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" value="{{ old('is_doctor') }}" type="checkbox" name="is_doctor" id="is_doctor">
+                                    <input class="form-check-input" type="checkbox" name="is_doctor" id="is_doctor" value="1">
                                     <label class="form-check-label" for="is_doctor">Jestem lekarzem</label>
                                 </div>
                             </div>
