@@ -16,7 +16,9 @@ class DoctorController extends Controller
     public function expensiveMedicines()
     {
         $medicines = executeFunctionWithCursor('SEARCH_EXPENSIVE_MEDICINES');
-        return view('doctor.components.expensive-medicines', compact('medicines'));
+        $averageMedicinePrice = self::calculateAverageMedicinePrice();
+
+        return view('doctor.components.expensive-medicines', compact('medicines', 'averageMedicinePrice'));
     }
 
     public function doctors(Request $request)

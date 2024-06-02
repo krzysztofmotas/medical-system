@@ -4,7 +4,11 @@
 
 @section('component-content')
     <div class="card">
-        <h5 class="card-header">Lista leków, których cena jest wyższa od średniej ceny leku</h5>
+        <h5 class="card-header">
+            Lista leków, których cena jest wyższa od średniej ceny leku
+            <strong>({{ number_format($averageMedicinePrice, 2) }} zł)</strong>
+        </h5>
+
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
