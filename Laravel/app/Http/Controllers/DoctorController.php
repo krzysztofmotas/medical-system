@@ -451,8 +451,10 @@ class DoctorController extends Controller
         $ageRanges = [
             ['start' => 0, 'end' => 9],
             ['start' => 10, 'end' => 18],
-            ['start' => 19, 'end' => 29],
-            ['start' => 30, 'end' => 59],
+            ['start' => 19, 'end' => 25],
+            ['start' => 26, 'end' => 34],
+            ['start' => 35, 'end' => 46],
+            ['start' => 47, 'end' => 59],
             ['start' => 60, 'end' => null],
         ];
 
