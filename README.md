@@ -1,27 +1,59 @@
-# **System zarządzania placówką medyczną**
+# System zarządzania placówką medyczną
+
+Projekt zaliczeniowy laboratorium przedmiotu **"Bazy danych"**.  
+Aplikacja webowa oparta na Laravelu, ilustrująca wykorzystanie funkcji i procedur PL/SQL w bazie danych Oracle.
 
 ## Opis projektu
+System umożliwia zarządzanie danymi medycznymi placówki, w tym informacjami o pacjentach, lekarzach, wizytach, dokumentacji medycznej oraz receptach.  
+Aplikacja wspiera operacje CRUD oraz analizę danych dzięki implementacji funkcji i procedur w bazie danych Oracle.
 
-Projekt bazy danych został stworzony z myślą o zarządzaniu informacjami medycznymi w placówce medycznej, zapewniając wsparcie w prowadzeniu dokumentacji dotyczącej personelu, lekarstw, metod leczenia oraz pacjentów.
+Pełna dokumentacja projektu znajduje się w pliku **Dokumentacja.pdf**.
 
-Dzięki naszej aplikacji personel medyczny może zarządzać danymi pacjentów, śledzić historię chorób i leczenia, oraz szybko dostępować do informacji o lekarzach i lekach.
+## Technologie i biblioteki
+- **Framework:** Laravel 11
+- **Język backend:** PHP 8.2  
+- **Baza danych:** Oracle 19c  
+- **Frontend:** Blade, Bootstrap 5 (Sneat)
+- **Narzędzia:** Docker, Composer
 
-## Funkcjonalności projektu
+## Struktura bazy danych
+Baza danych została zaprojektowana z myślą o przechowywaniu i przetwarzaniu danych medycznych.  
+Plik `medical_system.sql` zawiera pełną strukturę bazy danych oraz procedury i funkcje PL/SQL.
 
-Baza danych umożliwia dokładne śledzenie historii wizyt każdego pacjenta u lekarza, w tym datę wizyty, powód wizyty oraz diagnozę lekarza. Ta funkcjonalność pozwala na skuteczne monitorowanie stanu zdrowia pacjentów oraz świadczenie im właściwej opieki medycznej.
+### Diagram ERD
+<img width="600px" src="Images/ERD.png" />
 
-Ważnym elementem projektu jest również moduł dotyczący leków i recept. Baza danych przechowuje informacje o dostępnych lekach, wraz z ich ceną. Ponadto, system umożliwia przypisywanie leków do konkretnych recept przepisanych pacjentom podczas wizyt, wraz z informacjami dotyczącymi dawkowania oraz odpłatności leku.
+## Funkcjonalności aplikacji
+- Rejestrowanie pacjentów i lekarzy  
+- Zarządzanie wizytami oraz dokumentacją medyczną  
+- Generowanie recept i przypisywanie leków  
+- Analiza danych, m.in. statystyki wizyt, popularność specjalizacji, średni czas wizyt  
+- Raportowanie najczęściej przepisywanych leków i diagnoz
 
-Niektóre z dostępnych funkcji:
+## Przykładowe funkcje i procedury PL/SQL
+- **`SEARCH_EXPENSIVE_MEDICINES()`** – wyszukuje najdroższe leki  
+- **`CALCULATE_AVERAGE_MEDICINE_PRICE()`** – oblicza średnią cenę leków  
+- **`GENERATE_TOP_DIAGNOSIS_REPORT()`** – zwraca najczęściej stawiane diagnozy  
+- **`ADD_VISIT()`** – dodaje wizytę do systemu  
+- **`DELETE_VISIT_AND_ASSOCIATED_DATA()`** – usuwa wizytę i powiązane z nią dane  
 
-- *rejestrowanie pacjentów*,
-- *przyjmowanie wizyt*,
-- *tworzenie dokumentacji medycznej*,
-- *przepisywanie leków*,
-- *analiza danych*, np. popularność przepisywanych leków, lekarze z największą liczbą wizyt, średni czas trwania wizyty, statystyki dotyczące wieku pacjentów, popularność specjalizacji lekarskich, średnia liczba wizyt w zależności od wieku pacjentów, rozkład płci pacjentów w różnych grupach wiekowych itp.,
-- *historia pacjentów*.
+Pełna lista dostępna w pliku `medical_system.sql`.
 
-Dzięki temu systemowi personel medyczny może śledzić pacjentów i zapewnić im odpowiednią opiekę medyczną.
+## Przykładowe zrzuty ekranu
 
-## Diagram ERD
-<img src="Diagram ERD.png" />
+### Panel logowania
+![Zrzut ekranu 1](Images/Login.png)
+
+### Zarządzanie wizytami
+![Zrzut ekranu 2](Images/Visits.png)
+![Zrzut ekranu 3](Images/EditVisit.png)
+
+### Statystyki i analizy
+![Zrzut ekranu 4](Images/Stats.png)
+![Zrzut ekranu 4](Images/VisitsByAge.png)
+
+## Autorzy
+Projekt wykonali [Krzysztof Motas (@krzysztofmotas)](https://github.com/krzysztofmotas) i [Patryk Jarosiewicz (@404ptk)](https://github.com/404ptk), studenci Informatyki Uniwersytetu Rzeszowskiego.
+
+## Podsumowanie
+Projekt demonstruje integrację Laravel z bazą danych Oracle oraz wykorzystanie funkcji i procedur PL/SQL.  
